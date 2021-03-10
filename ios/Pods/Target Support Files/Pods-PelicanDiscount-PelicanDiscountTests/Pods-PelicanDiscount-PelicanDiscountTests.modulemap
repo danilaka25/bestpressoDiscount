@@ -1,0 +1,6 @@
+module Pods_PelicanDiscount_PelicanDiscountTests {
+  umbrella header "Pods-PelicanDiscount-PelicanDiscountTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
