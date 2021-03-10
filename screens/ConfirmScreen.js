@@ -6,8 +6,11 @@ import {
   Alert,
   Animated,
   ImageBackground,
+  KeyboardAvoidingView,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
+import LinearGradient from "react-native-linear-gradient";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import { useTheme } from "react-native-paper";
 
@@ -32,16 +35,21 @@ import styles, {
   NOT_EMPTY_CELL_BG_COLOR,
 } from "../styles/confirmStyles";
 
-const ConfirmScreen = ({route, navigation}) => {
 
-  const confirm = route.params.confirm
-  const phoneNumber = route.params.phoneNumber
+import{ AuthContext } from '../components/context';
 
-  //console.log("confirm", confirm)
 
+const ConfirmScreen = ({ route, navigation }) => {
+
+  const { signIn } = React.useContext(AuthContext);
+
+  const confirm = route.params.confirm;
+  const phoneNumber = route.params.phoneNumber;
+
+
+  
 
   const { Value, Text: AnimatedText } = Animated;
-  const { colors } = useTheme();
 
   const CELL_COUNT = 6;
 
@@ -99,6 +107,8 @@ const ConfirmScreen = ({route, navigation}) => {
     );
   };
 
+  const [disableBtn, setDisableBtn] = useState(true);
+
   const [value, setValue] = useState("");
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -106,14 +116,26 @@ const ConfirmScreen = ({route, navigation}) => {
     setValue,
   });
 
+  const fieldChanged = (value) => {
+    setValue(value);
+
+    if (value.length == 6) {
+      setDisableBtn(false);
+    } else {
+      setDisableBtn(true);
+    }
+  };
+
   async function confirmCode() {
+    let prefix = "+38";
     try {
       await confirm.confirm(value);
 
       try {
-        await AsyncStorage.setItem("userToken", confirm._verificationId);
-        await AsyncStorage.setItem("phoneNumber", phoneNumber);
-        navigation.navigate("HomeScreen", { transition: "fade" });
+        await AsyncStorage.setItem("fireBaseToken", confirm._verificationId);
+        await AsyncStorage.setItem("phoneNumber", prefix + phoneNumber);
+        //navigation.navigate("HomeScreen", { transition: "fade" });
+        signIn()
       } catch (e) {
         console.log(e);
       }
@@ -124,7 +146,10 @@ const ConfirmScreen = ({route, navigation}) => {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <ImageBackground
         source={bgImage}
         resizeMode="repeat"
@@ -138,34 +163,38 @@ const ConfirmScreen = ({route, navigation}) => {
           <LOGO width="290" height="100" />
         </Animatable.View>
 
-        <Animatable.View
-          style={[
-            styles.footer,
-            {
-              backgroundColor: colors.background,
-            },
-          ]}
-          animation="fadeInUpBig"
-        >
+        <Animatable.View style={styles.footer} animation="fadeInUpBig">
+          <Text style={styles.title}>Введите код с СМС</Text>
+
           <CodeField
             ref={ref}
             {...props}
             value={value}
-            onChangeText={(value) => setValue(value)}
+            onChangeText={(value) => fieldChanged(value)}
             cellCount={CELL_COUNT}
             rootStyle={styles.codeFieldRoot}
             keyboardType="number-pad"
             textContentType="oneTimeCode"
             renderCell={renderConfirmCell}
           />
-          <TouchableOpacity onPress={() => confirmCode()}>
-            <View style={styles.nextButton}>
-              <Text style={styles.nextButtonText}>Verify</Text>
-            </View>
-          </TouchableOpacity>
+
+          <View style={styles.signInRow}>  
+            <TouchableOpacity
+              disabled={disableBtn}
+              onPress={() => confirmCode()}  
+            >
+              <LinearGradient
+                colors={ disableBtn ? ["#ccc", "#ccc"] : ["#cd002a", "#cd0000"]}
+                style={styles.signIn}
+              >
+                <Text style={styles.textSign}>Отправить</Text>
+                <MaterialIcons name="navigate-next" color="#fff" size={20} />
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
         </Animatable.View>
       </ImageBackground>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

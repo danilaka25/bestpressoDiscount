@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   ActivityIndicator,
   ScrollView,
@@ -17,9 +17,8 @@ import AsyncStorage from "@react-native-community/async-storage";
 import Header from "../components/Header";
 import database from "@react-native-firebase/database";
 
-
-import SvgAnimatedLinearGradient from 'react-native-svg-animated-linear-gradient'
-import Svg, { Rect } from 'react-native-svg'
+import SvgAnimatedLinearGradient from "react-native-svg-animated-linear-gradient";
+import Svg, { Rect } from "react-native-svg";
 
 import bgImage from "../assets/pattern2.jpg";
 import LOGO from "../assets/svg/logo.svg";
@@ -33,25 +32,34 @@ import NEWS from "../assets/svg/newspaper.svg";
 import CUP_Active from "../assets/svg/coffee-cup-active.svg";
 import NEWS_Active from "../assets/svg/newspaper-active.svg";
 
-const HomeScreen = ({ navigation }) => {
-  const [testToken, setTestToken] = useState(0);
+import { useNavigation } from "@react-navigation/native";
+
+import { AuthContext } from "../components/context";
+
+import {
+  IIKO_LOGIN,
+  IIKO_PASS,
+  IIKO_ORGANIZATION_ID,
+} from "react-native-dotenv";
+
+const HomeScreen = ({ navigation, route }) => {
+  //const navigation = useNavigation()
+
+  const [firebaseToken, setFirebaseToken] = useState();
+  const [phone, setPhone] = useState(null);
+  const [iikoToken, setIikoToken] = useState(null);
+
+  const [balance, setBalance] = useState(999);
+
   const [activeNewsIndex, setNewsActiveIndex] = useState(0);
   const [activeProductIndex, setActiveProductIndex] = useState(0);
+
   const [news, setNews] = useState([]);
   const [products, setProducts] = useState([]);
   const [places, setPlaces] = useState([]);
   const [initalRegion, setInitalRegion] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
-
-
-
-  
-
   const [loading, setLoading] = useState(true);
-
-
-
-
 
   const _renderNews = ({ item }) => {
     return (
@@ -73,7 +81,6 @@ const HomeScreen = ({ navigation }) => {
 
   const _renderProducts = ({ item }) => {
     return (
-      
       <TouchableOpacity
         activeOpacity={1}
         itemData={item}
@@ -100,7 +107,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const getAllDataFromFirebaseDb = async () => {
-    console.log('isLoading')
+    console.log("isLoading");
     let tempNews = [];
     let tempProducts = [];
     let tempPlaces = [];
@@ -119,7 +126,6 @@ const HomeScreen = ({ navigation }) => {
 
         for (var key in snapshot.val().places) {
           tempPlaces.push(snapshot.val().places[key]);
-          //console.log(snapshot.val().places[key]);
         }
 
         for (var key in snapshot.val().initalRegion) {
@@ -133,75 +139,174 @@ const HomeScreen = ({ navigation }) => {
       });
   };
 
-  const getTokenFromStorage = async () => {
-    let userToken;
+  useEffect(() => {
+    (async () => {
+      await console.log("firebase start");
+      await getAllDataFromFirebaseDb();
+      await setLoading(false);
+      await console.log("firebase loaded");
+    })();
+
+    getPhoneAndIikoToken().then((data) => {
+      getIikoUserInfoByPhone(data[0], data[1]);
+    });
+
+    console.log("useEffect");
+  }, []);
+
+  const getPhoneAndIikoToken = async () => {
+    let phoneNumber;
+    let iikoToken;
     try {
-      userToken = await AsyncStorage.getItem("userToken");
+      phoneNumber = await AsyncStorage.getItem("phoneNumber");
+      iikoToken = await getIikoAuthToken();
     } catch (e) {
       //console.log(e)
     }
-    setTestToken(userToken);
+    setPhone(phoneNumber);
+    return [phoneNumber, iikoToken];
   };
 
-  useEffect(() => {
-    getTokenFromStorage();
-    
-    (async () => {
-      await getAllDataFromFirebaseDb();
-      await setLoading(false)
-      await console.log('loaded')
+  const addIikoUserByPhone = (phone, token) => {
+    ///api/0/customers/create_or_update?access_token={accessToken}&organization={organizationId}
+    fetch(
+      "https://card.iiko.co.uk/api/0/customers/create_or_update?access_token=" +
+        token +
+        "&organization=" +
+        IIKO_ORGANIZATION_ID,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          customer: { phone: phone },
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("post user", response);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  };
 
-    })();
-   
-   
-   
-    console.log("useEffect");
+  const getIikoAuthToken = () => {
+    return fetch(
+      "https://card.iiko.co.uk/api/0/auth/access_token?user_id=" +
+        IIKO_LOGIN +
+        "&user_secret=" +
+        IIKO_PASS,
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then((iikoToken) => {
+        return iikoToken;
+      })
+      .catch((err) => {});
+  };
 
+  const getIikoUserInfoByPhone = (phone, token) => {
+    return fetch(
+      "https://card.iiko.co.uk/api/0/customers/get_customer_by_phone?access_token=" +
+        token +
+        "&organization=" +
+        IIKO_ORGANIZATION_ID +
+        "&phone=" +
+        phone,
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then((userData) => {
+        console.log("getIikoUserInfoByPhone userData", userData);
+        if (userData.httpStatusCode == 400 && userData.code == null) {
+          // create new user
+          console.log("addIikoUserByPhone start");
+          addIikoUserByPhone(phone, token);
+        } else {
+          setBalance(userData.walletBalances[0].balance);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }; 
 
-  }, []);
+  const checkIfIikoTokenIsValid = (iikoToken) => {
+    return fetch(
+      "https://card.iiko.co.uk/api/0/customers/get_customer_by_phone?access_token=" +
+        iikoToken,
+      {
+        method: "GET",
+      }
+    )
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //setIikoResponseCode(responseJson.code)
+        console.log("checkIfIikoTokenIsValid");
+
+        if (responseJson.code == 201) {
+          return false;
+        } else {
+          return true;
+        }
+
+        //return responseJson.code
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const changeTab = (n) => {
     setActiveTab(n);
   };
 
   const renderSlider = (activeTab) => {
-    return(
+    return (
       <>
-    {activeTab ? (
-      <View style={styles.SliderWrapper}>
-        <Carousel
-          layout={"default"}
-          loop={true}
-          enableSnap={true}
-          activeSlideAlignment={"start"}
-          inactiveSlideScale={1}
-          inactiveSlideOpacity={1}
-          data={news}
-          sliderWidth={200}
-          itemWidth={220}
-          renderItem={_renderNews}
-          onSnapToItem={(index) => setNewsActiveIndex(index)}
-        />
-      </View>
-    ) : (
-      <View style={styles.SliderWrapper}>
-        <Carousel
-          layout={"default"}
-          loop={true}
-          enableSnap={true}
-          activeSlideAlignment={"start"}
-          inactiveSlideScale={1}
-          inactiveSlideOpacity={1}
-          data={products}
-          sliderWidth={150}
-          itemWidth={160}
-          renderItem={_renderProducts}
-          onSnapToItem={(index) => setActiveProductIndex(index)}
-        />
-      </View>
-    )}
-    </>)
-  }
+        {activeTab ? (
+          <View style={styles.SliderWrapper}>
+            <Carousel
+              layout={"default"}
+              loop={true}
+              enableSnap={true}
+              activeSlideAlignment={"start"}
+              inactiveSlideScale={1}
+              inactiveSlideOpacity={1}
+              data={news}
+              sliderWidth={200}
+              itemWidth={220}
+              renderItem={_renderNews}
+              onSnapToItem={(index) => setNewsActiveIndex(index)}
+            />
+          </View>
+        ) : (
+          <View style={styles.SliderWrapper}>
+            <Carousel
+              layout={"default"}
+              loop={true}
+              enableSnap={true}
+              activeSlideAlignment={"start"}
+              inactiveSlideScale={1}
+              inactiveSlideOpacity={1}
+              data={products}
+              sliderWidth={150}
+              itemWidth={160}
+              renderItem={_renderProducts}
+              onSnapToItem={(index) => setActiveProductIndex(index)}
+            />
+          </View>
+        )}
+      </>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -220,19 +325,23 @@ const HomeScreen = ({ navigation }) => {
               onPress={() => navigation.navigate("DiscountBigScreen")}
             >
               <View>
-                <Barcode
-                  value="+380632373201"
-                  format="CODE128"
-                  background="#fff"
-                  lineColor="#000"
-                />
+                {phone == null ? (
+                  <Text>No bonus</Text>
+                ) : (
+                  <Barcode
+                    value={phone}
+                    format="CODE128"
+                    background="#fff"
+                    lineColor="#000"
+                  />
+                )}
               </View>
             </TouchableOpacity>
             <View style={styles.barcodeDescRow}>
               <Text style={styles.barcodeDesc}>На Вашому рахунку:</Text>
               <View style={styles.barcodePointsContainer}>
                 <STAR width={27} height={27} />
-                <Text style={styles.barcodePointsValue}>15</Text>
+                <Text style={styles.barcodePointsValue}>{balance}</Text>
                 <Text style={styles.barcodePointsText}>Балів</Text>
               </View>
             </View>
@@ -277,33 +386,35 @@ const HomeScreen = ({ navigation }) => {
               Новости
             </Text>
           </TouchableOpacity>
-        </View>   
-
+        </View>
 
         {!loading ? (
-           renderSlider(activeTab)
-
+          renderSlider(activeTab)
         ) : (
-          <ScrollView
-          horizontal={true}
-          style={styles.preloadProductsRow}
-        >
-          <SvgAnimatedLinearGradient width={140} height={160}  style={styles.preloadProductItem}>
-              <Rect x="0" y="0" rx="5" ry="0" width="140" height="160"/>
-          </SvgAnimatedLinearGradient>
-          <SvgAnimatedLinearGradient width={140} height={160} style={styles.preloadProductItem}>
-              <Rect x="0" y="0" rx="5" ry="0" width="140" height="160"/>
-          </SvgAnimatedLinearGradient>
-          <SvgAnimatedLinearGradient width={140} height={160}  style={styles.preloadProductItem}>
-              <Rect x="0" y="0" rx="5" ry="0" width="140" height="160"/>
-          </SvgAnimatedLinearGradient>
-        
-        </ScrollView>
+          <ScrollView horizontal={true} style={styles.preloadProductsRow}>
+            <SvgAnimatedLinearGradient
+              width={140}
+              height={160}
+              style={styles.preloadProductItem}
+            >
+              <Rect x="0" y="0" rx="5" ry="0" width="140" height="160" />
+            </SvgAnimatedLinearGradient>
+            <SvgAnimatedLinearGradient
+              width={140}
+              height={160}
+              style={styles.preloadProductItem}
+            >
+              <Rect x="0" y="0" rx="5" ry="0" width="140" height="160" />
+            </SvgAnimatedLinearGradient>
+            <SvgAnimatedLinearGradient
+              width={140}
+              height={160}
+              style={styles.preloadProductItem}
+            >
+              <Rect x="0" y="0" rx="5" ry="0" width="140" height="160" />
+            </SvgAnimatedLinearGradient>
+          </ScrollView>
         )}
-
-      
-
-
 
         <View style={styles.categoryContainer}>
           <TouchableOpacity
@@ -342,8 +453,6 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.categoryBtnTxt}>Меню</Text>
           </TouchableOpacity>
         </View>
-
-        
       </ImageBackground>
     </View>
   );
@@ -424,7 +533,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     alignSelf: "center",
   },
-  toggleBtn: { 
+  toggleBtn: {
     padding: 40,
     borderRadius: 15,
     backgroundColor: "#fff",
@@ -584,10 +693,8 @@ const styles = StyleSheet.create({
   },
   preloadProductsRow: {
     flex: 2,
-   
-    marginLeft: '5%'
-    
-    
+
+    marginLeft: "5%",
   },
   preloadProductItem: {
     // width: 160,
@@ -595,6 +702,6 @@ const styles = StyleSheet.create({
     // backgroundColor: '#ccc',
     marginRight: 5,
     borderRadius: 15,
-    marginLeft: 0
-  }
+    marginLeft: 0,
+  },
 });

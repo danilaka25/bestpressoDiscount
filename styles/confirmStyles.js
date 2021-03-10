@@ -1,49 +1,43 @@
 import { StyleSheet, Platform, Dimensions } from "react-native";
-
-export const CELL_SIZE = 50;
+export const CELL_SIZE = 40;
 export const CELL_BORDER_RADIUS = 8;
 export const DEFAULT_CELL_BG_COLOR = "#ccc";
 export const NOT_EMPTY_CELL_BG_COLOR = "#6AAE36";
 export const ACTIVE_CELL_BG_COLOR = "#6AAE31";
-
-const { height } = Dimensions.get("screen");
+const { height, width } = Dimensions.get("screen");
 const height_logo = height * 0.38;
 
-
-
 const styles = StyleSheet.create({
-
-
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ffffff",
-    width: "100%",
-    height: "100%",
   },
   bgImage: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
+    flex: 1,
+    width: width,
+    height: height,
   },
   header: {
-    flex: 1,
+    height: '50%',
+    width: '100%',
     justifyContent: "center",
     alignItems: "center",
+    position: 'absolute',
+    top: 0
   },
-
   footer: {
+    position: 'absolute',
+    width: '100%',
+    bottom: 0,
     flex: 1,
     backgroundColor: "#fff",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingVertical: 50,
+    paddingVertical: 40,
     paddingHorizontal: 30,
   },
   logo: {
-    width: height_logo,
-    height: height_logo,
+    // width: height_logo,
+    // height: height_logo,
   },
   title: {
     color: "#05375a",
@@ -59,8 +53,8 @@ const styles = StyleSheet.create({
 
   codeFieldRoot: {
     height: CELL_SIZE,
-    marginTop: 30,
-    paddingHorizontal: 10,
+     
+     
     justifyContent: "center",
   },
   cell: {
@@ -69,10 +63,10 @@ const styles = StyleSheet.create({
     width: CELL_SIZE,
     lineHeight: CELL_SIZE - 5,
     ...Platform.select({ web: { lineHeight: 65 } }),
-    fontSize: 30,
+    fontSize: 20,
     textAlign: "center",
     borderRadius: CELL_BORDER_RADIUS,
-    color: "#3759b8",
+    color: "#000",
     backgroundColor: "#fff",
 
     // IOS
@@ -90,17 +84,14 @@ const styles = StyleSheet.create({
 
   // =======================
 
-  root: {
-    // minHeight: 800,
-    padding: 20,
-  },
+ 
   title: {
-    paddingTop: 50,
+    paddingTop: 0,
     color: "#000",
     fontSize: 20,
     fontWeight: "700",
     textAlign: "center",
-    paddingBottom: 10,
+    paddingBottom: 30,
   },
   desc: {
     fontSize: 16,
@@ -117,20 +108,25 @@ const styles = StyleSheet.create({
     color: "#000",
     textAlign: "center",
   },
-  nextButton: {
-    marginTop: 30,
-    borderRadius: 60,
-    height: 60,
-    backgroundColor: "#3557b7",
+
+
+  signInRow: {
+    display: "flex",
     justifyContent: "center",
-    minWidth: 300,
-    marginBottom: 100,
+    marginTop: 30,
   },
-  nextButtonText: {
-    textAlign: "center",
-    fontSize: 20,
-    color: "#fff",
-    fontWeight: "700",
+  signIn: {
+    width: 200,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+    flexDirection: "row",
+    alignSelf: "center",
+  },
+  textSign: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
 

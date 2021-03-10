@@ -40,12 +40,23 @@ const SignInScreen = ({ navigation }) => {
 
   const [tokenWasReceived, setTokenWasReceived] = useState(false);
 
+
+  const [disableBtn, setDisableBtn] = useState(true);
+
   const onChangedPhone = (text) => {
     let validPhone = "";
     let numbers = "0123456789";
     for (var i = 0; i < text.length; i++) {
       if (numbers.indexOf(text[i]) > -1) {
         validPhone = validPhone + text[i];
+
+        if (validPhone.length == 10) {
+          setDisableBtn(false);
+        } else {
+          setDisableBtn(true);
+        }
+
+
       } else {
         Alert.alert("please enter numbers only");
       }
@@ -96,9 +107,9 @@ const SignInScreen = ({ navigation }) => {
           ]}
           animation="fadeInUpBig"
         >
-          <Text style={styles.title}>Введите свой номер телефона</Text>
+          <Text style={styles.title}>Введіть свій номер телефону</Text>
           <Text style={styles.desc}>
-            Что бы мы согли привязать вашу скидочную карту к телефону
+            Що би змогли прив'язати вашу дисконтну карту до телефону
           </Text>
 
           <View style={styles.button}>
@@ -116,12 +127,13 @@ const SignInScreen = ({ navigation }) => {
             <View style={styles.signInRow}>
               <TouchableOpacity
                 onPress={() => signInWithPhoneNumber(phoneNumber)}
+                disabled={disableBtn}
               >
                 <LinearGradient
-                  colors={["#cd002a", "#cd0000"]}
+                  colors={ disableBtn ? ["#ccc", "#ccc"] : ["#cd002a", "#cd0000"]}
                   style={styles.signIn}
                 >
-                  <Text style={styles.textSign}>Отправить</Text>
+                  <Text style={styles.textSign}>Отримати СМС</Text>
                   <MaterialIcons name="navigate-next" color="#fff" size={20} />
                 </LinearGradient>
               </TouchableOpacity>
@@ -152,7 +164,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   header: {
-    flex: 1,
+    flex: 2,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -170,13 +182,14 @@ const styles = StyleSheet.create({
     height: height_logo,
   },
   title: {
-    color: "#05375a",
+    color: "#000",
     fontSize: 23,
     fontWeight: "bold",
+    marginBottom: 15
   },
-  text: {
+  desc: {
     color: "grey",
-    marginTop: 5,
+    marginBottom: 20
   },
   button: {
     // marginTop: 30,
@@ -189,14 +202,16 @@ const styles = StyleSheet.create({
   fieldInputPrefix: {
     // flex: 1,
     fontSize: 20,
+    marginRight: 20
   },
   fieldInput: {
-    backgroundColor: "#cccccc",
-    borderRadius: 50,
+    backgroundColor: "#f8f9fa",
+    borderBottomColor: "#ccc",
+    borderBottomWidth: 2,
     paddingLeft: 20,
     flex: 4,
     fontSize: 20,
-    marginRight: 20,
+    marginRight: 10,
   },
   signInRow: {
     display: "flex",

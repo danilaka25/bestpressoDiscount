@@ -1,4 +1,4 @@
-#Tue Feb 02 16:27:40 EET 2021
+#Wed Mar 10 18:03:26 EET 2021
 base.2=/Users/user/Desktop/FoodPelican/android/app/build/intermediates/dex/debug/mergeDexDebug/classes3.dex
 path.2=classes3.dex
 base.1=/Users/user/Desktop/FoodPelican/android/app/build/intermediates/dex/debug/mergeDexDebug/classes2.dex
