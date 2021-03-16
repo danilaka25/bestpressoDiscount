@@ -3,8 +3,6 @@ import {
   ImageBackground,
   View,
   Text,
-  StatusBar,
-  TouchableOpacity,
   SafeAreaView,
   StyleSheet,
 } from "react-native";
@@ -18,10 +16,20 @@ import bgImage from "../assets/pattern2.jpg";
 
 import Header from "../components/Header";
 
-const DiscountBigScreen = ({ navigation }) => {
+const DiscountBigScreen = ({ route, navigation }) => {
+
+  console.log("DiscountBigScreen", route.params)
+
+  let {balance, phone} = route.params
+
+  const reloadBonus = () => {
+
+  }
+
+
+
   return (
     <>
-      <StatusBar hidden />
       <Header navigation={navigation} showBack={true} showReload={true} />
       <SafeAreaView style={styles.backgroung}>
         <ImageBackground
@@ -37,17 +45,7 @@ const DiscountBigScreen = ({ navigation }) => {
               width: "100%",
             }}
           >
-            <View style={styles.bonusWrapper}>
-              <Text style={styles.bonusWrapperTitle}>на вашеи счету</Text>
-              <Text>0</Text>
-              <Animatable.View
-                animation="pulse"
-                easing="ease-out"
-                iterationCount="infinite"
-              >
-                <STAR width={27} height={27} />
-              </Animatable.View>
-            </View>
+      
 
             <View
               style={[
@@ -58,7 +56,7 @@ const DiscountBigScreen = ({ navigation }) => {
               ]}
             >
               <Barcode
-                value="+380632373202"
+                value={phone}
                 format="CODE128"
                 background="#fff"
                 lineColor="#000"
@@ -66,6 +64,19 @@ const DiscountBigScreen = ({ navigation }) => {
               />
             </View>
           </View>
+
+
+          <View style={styles.bonusWrapper}>
+              <Text style={styles.bonusWrapperTitle}>на вашеи счету</Text>
+              <Text style={styles.bounusWrapperValue}>{balance}</Text>
+              <Animatable.View
+                animation="pulse"
+                easing="ease-out"
+                iterationCount="infinite"
+              >
+                <STAR width={27} height={27} />
+              </Animatable.View>
+            </View>
         </ImageBackground>
       </SafeAreaView>
     </>
@@ -83,17 +94,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
   },
   bonusWrapper: {
+    position: 'absolute',
+    width: '100%',
+    bottom: 0,
     flexDirection: 'row',
     alignItems: "center",
     backgroundColor: "#ccc",
-    height: 60,
-    width: 280,
-    justifyContent: "space-between",
+    height: 60, 
+    justifyContent: "center",
     padding: 20,
     borderRadius: 10,
-    marginBottom: 150,
   },
   bonusWrapperTitle: {},
+  bounusWrapperValue: {
+    marginHorizontal: 20
+  },
   barcodeWrapper: {
     alignItems: "center",
     backgroundColor: "#fff",

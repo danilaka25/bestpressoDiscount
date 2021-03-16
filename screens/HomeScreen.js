@@ -7,7 +7,6 @@ import {
   Text,
   Image,
   StyleSheet,
-  StatusBar,
   TouchableOpacity,
 } from "react-native";
 
@@ -149,9 +148,21 @@ const HomeScreen = ({ navigation, route }) => {
 
     getPhoneAndIikoToken().then((data) => {
       getIikoUserInfoByPhone(data[0], data[1]);
+
+
+      setTimeout(() => 
+      getIikoUserInfoByPhone(data[0], data[1])
+      , 15000);
+
     });
 
     console.log("useEffect");
+
+
+
+
+
+
   }, []);
 
   const getPhoneAndIikoToken = async () => {
@@ -310,7 +321,7 @@ const HomeScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar hidden />
+      
       <ImageBackground
         source={bgImage}
         resizeMode="repeat"
@@ -322,7 +333,7 @@ const HomeScreen = ({ navigation, route }) => {
         <View style={styles.barcodeContainer}>
           <View style={styles.barcodeInner}>
             <TouchableOpacity
-              onPress={() => navigation.navigate("DiscountBigScreen")}
+              onPress={() => navigation.navigate("DiscountBigScreen", {balance: balance, phone: phone}, navigation)}
             >
               <View>
                 {phone == null ? (
@@ -429,7 +440,7 @@ const HomeScreen = ({ navigation, route }) => {
 
           <TouchableOpacity
             style={styles.categoryBtn}
-            onPress={() => navigation.navigate("ExploreScreen")}
+            onPress={() => navigation.navigate("DiscountDescription")}
           >
             <View style={styles.categoryIcon}>
               <MAP width={26} height={26} />

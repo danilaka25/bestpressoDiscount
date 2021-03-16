@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { View, ActivityIndicator, Button } from "react-native";
+import { View, ActivityIndicator, StatusBar } from "react-native";
 import {
   NavigationContainer,
   DefaultTheme as NavigationDefaultTheme,
@@ -24,23 +24,21 @@ import {
 
 import HomeScreen from "./screens/HomeScreen";
 import ExploreScreen from "./screens/ExploreScreen";
-
 import ProductItemDetails from "./screens/ProductItemDetails";
 import NewsItemDetails from "./screens/NewsItemDetails";
-
 import SplashScreen from "./screens/SplashScreen";
 import SignInScreen from "./screens/SignInScreen";
 import ConfirmScreen from "./screens/ConfirmScreen";
-
 import DiscountBigScreen from "./screens/DiscountBigScreen";
-
 import SettingsScreen from "./screens/SettingsScreen";
+import EditProfileScreen from "./screens/EditProfileScreen";
+import DiscountDescription from "./screens/DiscountDescription"; 
 
 import {
   IIKO_LOGIN,
   IIKO_PASS,
   IIKO_ORGANIZATION_ID,
-} from "react-native-dotenv";
+} from "react-native-dotenv"; // added
 
 import { AuthContext } from "./components/context";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -266,6 +264,7 @@ const App = ({ navigation }) => {
 
   return (
     <PaperProvider theme={theme}>
+      <StatusBar hidden />
       <AuthContext.Provider value={authContext} >  
       {/* value={loginState.userInfo} */}
         <NavigationContainer theme={theme}>
@@ -317,6 +316,28 @@ const App = ({ navigation }) => {
                 component={SettingsScreen}
                 options={{ headerShown: false }}
               />
+              <MainStack.Screen
+                name="EditProfileScreen"
+                component={EditProfileScreen}
+                options={{ headerShown: false }}
+              />
+
+
+              <MainStack.Screen
+                name="DiscountDescription"
+                component={DiscountDescription}
+                options={{ headerShown: false }}
+              />
+
+
+
+
+
+
+
+
+
+              
             </MainStack.Navigator>
           ) : (
             <InitalStack.Navigator initialRouteName={SplashScreen}>

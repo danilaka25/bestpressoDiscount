@@ -81,9 +81,10 @@ const ProductItemDetails = ({ route, navigation }) => {
       resizeMode="repeat"
       style={styles.bgImage}
     >
+      
+      <Header navigation={navigation} showBack={true} showReload={false} />
       <SafeAreaView style={styles.scrollArea}>
       <ScrollView style={styles.scrollView}>
-      <Header navigation={navigation} showBack={true} showReload={false} />
           <View style={styles.productImageBg}>
             <Image source={{ uri: itemData.img }} style={styles.productImage} resizeMode="cover"/>
           </View>
