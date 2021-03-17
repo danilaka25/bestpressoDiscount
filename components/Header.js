@@ -3,8 +3,11 @@ import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import LOGO from "../assets/svg/logo.svg";
 import BACK from "../assets/svg/back.svg";
 import RELOAD from "../assets/svg/reload.svg";
+import INFO from "../assets/svg/star.svg";
 
-const Header = (props) => {
+
+const Header = (props, {navigation} ) => {
+  
   console.log(props.showReload);
 
   const [uniqueValue, setUniqueValue] = useState(1);
@@ -41,11 +44,25 @@ const Header = (props) => {
     }
   };
 
+
+  const displayInfo = () => {
+    if (props.showInfo) {
+      return (
+        <TouchableOpacity style={styles.reload} oonPress={() => props.navigation("DiscountDescription")}>
+          <INFO />
+        </TouchableOpacity>
+      );
+    } else {
+      return;
+    }
+  };
+
   return (
     <View style={styles.header}>
       {displayBack()}
       <LOGO width="200" height="80" style={styles.logo} />
       {displayReload()}
+      {displayInfo()}
     </View>
   );
 };

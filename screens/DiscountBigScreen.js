@@ -7,30 +7,24 @@ import {
   StyleSheet,
 } from "react-native";
 import Barcode from "react-native-barcode-builder";
-
 import * as Animatable from "react-native-animatable";
-
 import STAR from "../assets/svg/star.svg";
-
 import bgImage from "../assets/pattern2.jpg";
-
 import Header from "../components/Header";
 
-const DiscountBigScreen = ({ route, navigation }) => {
+import {connect} from 'react-redux';
+import {updateUserData} from './../redux/actions/userDataActions';
 
-  console.log("DiscountBigScreen", route.params)
+const DiscountBigScreen = (props) => {
 
-  let {balance, phone} = route.params
+  console.log("DiscountBigScreen", props)
 
-  const reloadBonus = () => {
-
-  }
-
-
+  let {phone} = props.route.params
+  let balance = props.userDataReducer.userData.walletBalances[0].balance
 
   return (
     <>
-      <Header navigation={navigation} showBack={true} showReload={true} />
+      <Header navigation={props.navigation} showBack={true} showReload={true} />
       <SafeAreaView style={styles.backgroung}>
         <ImageBackground
           source={bgImage}
@@ -45,8 +39,6 @@ const DiscountBigScreen = ({ route, navigation }) => {
               width: "100%",
             }}
           >
-      
-
             <View
               style={[
                 styles.barcodeWrapper,
@@ -64,26 +56,37 @@ const DiscountBigScreen = ({ route, navigation }) => {
               />
             </View>
           </View>
-
-
           <View style={styles.bonusWrapper}>
-              <Text style={styles.bonusWrapperTitle}>на вашеи счету</Text>
-              <Text style={styles.bounusWrapperValue}>{balance}</Text>
-              <Animatable.View
-                animation="pulse"
-                easing="ease-out"
-                iterationCount="infinite"
-              >
-                <STAR width={27} height={27} />
-              </Animatable.View>
-            </View>
+            <Text style={styles.bonusWrapperTitle}>на вашеи счету</Text>
+            <Text style={styles.bounusWrapperValue}>{balance}</Text>
+            <Animatable.View
+              animation="pulse"
+              easing="ease-out"
+              iterationCount="infinite"
+            >
+              <STAR width={27} height={27} />
+            </Animatable.View>
+          </View>
         </ImageBackground>
       </SafeAreaView>
     </>
   );
 };
 
-export default DiscountBigScreen;
+//export default DiscountBigScreen;
+
+
+const mapStateToProps = state => {
+  return {
+    userDataReducer: state.userDataReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  updateUserData: (data) => dispatch(updateUserData(data))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DiscountBigScreen);
 
 const styles = StyleSheet.create({
   bgImage: {
@@ -100,7 +103,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: "center",
     backgroundColor: "#ccc",
-    height: 60, 
+    height: 60,
     justifyContent: "center",
     padding: 20,
     borderRadius: 10,

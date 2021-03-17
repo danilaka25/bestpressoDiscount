@@ -35,24 +35,19 @@ import styles, {
   NOT_EMPTY_CELL_BG_COLOR,
 } from "../styles/confirmStyles";
 
-
 import{ AuthContext } from '../components/context';
+import {connect} from 'react-redux';
+import {signIn} from './../redux/actions/authActions';
 
+const ConfirmScreen = ( props ) => {
 
-const ConfirmScreen = ({ route, navigation }) => {
+  //console.log("route ConfirmScreen", props.signIn)
 
-  const { signIn } = React.useContext(AuthContext);
-
-  const confirm = route.params.confirm;
-  const phoneNumber = route.params.phoneNumber;
-
-
-  
+  const confirm = props.route.params.confirm;
+  const phoneNumber = props.route.params.phoneNumber;
 
   const { Value, Text: AnimatedText } = Animated;
-
   const CELL_COUNT = 6;
-
   const animationsColor = [...new Array(CELL_COUNT)].map(() => new Value(0));
   const animationsScale = [...new Array(CELL_COUNT)].map(() => new Value(1));
   const animateCell = ({ hasValue, index, isFocused }) => {
@@ -108,10 +103,9 @@ const ConfirmScreen = ({ route, navigation }) => {
   };
 
   const [disableBtn, setDisableBtn] = useState(true);
-
   const [value, setValue] = useState("");
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
-  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
+  const [props2, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
@@ -134,13 +128,11 @@ const ConfirmScreen = ({ route, navigation }) => {
       try {
         await AsyncStorage.setItem("fireBaseToken", confirm._verificationId);
         await AsyncStorage.setItem("phoneNumber", prefix + phoneNumber);
-        //navigation.navigate("HomeScreen", { transition: "fade" });
-        signIn()
+        props.signIn(confirm._verificationId)// dispatch
       } catch (e) {
-        console.log(e);
+        //console.log(e);
       }
     } catch (error) {
-      console.log("Invalid code.", error);
       Alert.alert("false code");
     }
   }
@@ -168,7 +160,7 @@ const ConfirmScreen = ({ route, navigation }) => {
 
           <CodeField
             ref={ref}
-            {...props}
+            {...props2}
             value={value}
             onChangeText={(value) => fieldChanged(value)}
             cellCount={CELL_COUNT}
@@ -198,4 +190,16 @@ const ConfirmScreen = ({ route, navigation }) => {
   );
 };
 
-export default ConfirmScreen;
+// export default ConfirmScreen;
+
+const mapStateToProps = state => {
+  return {
+    reducerData: state.authReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  signIn: (fireBaseToken) => dispatch(signIn(fireBaseToken))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmScreen);

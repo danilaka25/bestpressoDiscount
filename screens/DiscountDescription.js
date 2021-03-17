@@ -140,6 +140,7 @@ const DiscountDescription = ({ navigation }) => {
               </Text>
             </View>
           </View>
+        
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>

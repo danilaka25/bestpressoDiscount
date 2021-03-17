@@ -313,7 +313,6 @@ com/horcrux/svg/VirtualView.class
 com/pelicandiscount/BuildConfig.class
 com/pelicandiscount/MainApplication$1.class
 com/pelicandiscount/MainApplication.class
-com/swmansion/reanimated/MapUtils.class
 com/swmansion/rnscreens/ScreenStackHeaderConfigViewManager.class
 com/th3rdwave/safeareacontext/SafeAreaContextPackage.class
 io/invertase/firebase/app/ReactNativeFirebaseAppPackage.class

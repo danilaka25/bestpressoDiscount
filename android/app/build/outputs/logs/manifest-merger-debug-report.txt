@@ -19,10 +19,8 @@ MERGED from [:react-native-community_async-storage] /Users/user/Desktop/FoodPeli
 MERGED from [:react-native-community_masked-view] /Users/user/Desktop/FoodPelican/node_modules/@react-native-community/masked-view/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-gesture-handler] /Users/user/Desktop/FoodPelican/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-maps] /Users/user/Desktop/FoodPelican/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-12:12
-MERGED from [:react-native-reanimated] /Users/user/Desktop/FoodPelican/node_modules/react-native-reanimated/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-safe-area-context] /Users/user/Desktop/FoodPelican/node_modules/react-native-safe-area-context/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-screens] /Users/user/Desktop/FoodPelican/node_modules/react-native-screens/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
-MERGED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-23:12
 MERGED from [:react-native-svg] /Users/user/Desktop/FoodPelican/node_modules/react-native-svg/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-vector-icons] /Users/user/Desktop/FoodPelican/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [com.facebook.react:react-native:0.62.2] /Users/user/.gradle/caches/transforms-2/files-2.1/ef474ea8ad52aeaf6702db94ca6001da/jetified-react-native-0.62.2/AndroidManifest.xml:2:1-13:12
@@ -146,8 +144,6 @@ MERGED from [com.google.firebase:firebase-auth:20.0.2] /Users/user/.gradle/cache
 MERGED from [com.google.firebase:firebase-auth:20.0.2] /Users/user/.gradle/caches/transforms-2/files-2.1/da24243f494ea5385d82b14649215d69/jetified-firebase-auth-20.0.2/AndroidManifest.xml:26:5-81:19
 MERGED from [com.google.android.gms:play-services-safetynet:17.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/cf264438c6cc1090fae1cbb3936e352f/jetified-play-services-safetynet-17.0.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services-safetynet:17.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/cf264438c6cc1090fae1cbb3936e352f/jetified-play-services-safetynet-17.0.0/AndroidManifest.xml:22:5-20
-MERGED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-21:19
-MERGED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-21:19
 MERGED from [com.facebook.react:react-native:0.62.2] /Users/user/.gradle/caches/transforms-2/files-2.1/ef474ea8ad52aeaf6702db94ca6001da/jetified-react-native-0.62.2/AndroidManifest.xml:11:5-20
 MERGED from [com.facebook.react:react-native:0.62.2] /Users/user/.gradle/caches/transforms-2/files-2.1/ef474ea8ad52aeaf6702db94ca6001da/jetified-react-native-0.62.2/AndroidManifest.xml:11:5-20
 MERGED from [com.google.firebase:firebase-database:19.6.0] /Users/user/.gradle/caches/transforms-2/files-2.1/6c78f0dd1d40ddc6b52049296548bbff/jetified-firebase-database-19.6.0/AndroidManifest.xml:28:5-36:19
@@ -274,14 +270,10 @@ MERGED from [:react-native-gesture-handler] /Users/user/Desktop/FoodPelican/node
 MERGED from [:react-native-gesture-handler] /Users/user/Desktop/FoodPelican/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-maps] /Users/user/Desktop/FoodPelican/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-maps] /Users/user/Desktop/FoodPelican/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:react-native-reanimated] /Users/user/Desktop/FoodPelican/node_modules/react-native-reanimated/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-reanimated] /Users/user/Desktop/FoodPelican/node_modules/react-native-reanimated/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-safe-area-context] /Users/user/Desktop/FoodPelican/node_modules/react-native-safe-area-context/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-safe-area-context] /Users/user/Desktop/FoodPelican/node_modules/react-native-safe-area-context/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-screens] /Users/user/Desktop/FoodPelican/node_modules/react-native-screens/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-screens] /Users/user/Desktop/FoodPelican/node_modules/react-native-screens/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-svg] /Users/user/Desktop/FoodPelican/node_modules/react-native-svg/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-svg] /Users/user/Desktop/FoodPelican/node_modules/react-native-svg/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-vector-icons] /Users/user/Desktop/FoodPelican/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
@@ -524,26 +516,6 @@ uses-permission#android.permission.ACCESS_COARSE_LOCATION
 ADDED from [:react-native-maps] /Users/user/Desktop/FoodPelican/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:10:5-81
 	android:name
 		ADDED from [:react-native-maps] /Users/user/Desktop/FoodPelican/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:10:22-78
-uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-81
-	android:name
-		ADDED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:9:22-78
-provider#cl.json.RNShareFileProvider
-ADDED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:12:9-20:20
-	android:grantUriPermissions
-		ADDED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:16:13-47
-	android:authorities
-		ADDED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-72
-	android:exported
-		ADDED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:15:13-37
-	android:name
-		ADDED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-55
-meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:13-19:64
-	android:resource
-		ADDED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:19:17-61
-	android:name
-		ADDED from [:react-native-share] /Users/user/Desktop/FoodPelican/node_modules/react-native-share/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:18:17-67
 meta-data#com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar
 ADDED from [com.google.firebase:firebase-database:19.6.0] /Users/user/.gradle/caches/transforms-2/files-2.1/6c78f0dd1d40ddc6b52049296548bbff/jetified-firebase-database-19.6.0/AndroidManifest.xml:32:13-34:85
 	android:value

@@ -31,9 +31,9 @@ import NEWS from "../assets/svg/newspaper.svg";
 import CUP_Active from "../assets/svg/coffee-cup-active.svg";
 import NEWS_Active from "../assets/svg/newspaper-active.svg";
 
-import { useNavigation } from "@react-navigation/native";
 
-import { AuthContext } from "../components/context";
+import {connect} from 'react-redux';
+import {updateUserData} from './../redux/actions/userDataActions';
 
 import {
   IIKO_LOGIN,
@@ -41,8 +41,12 @@ import {
   IIKO_ORGANIZATION_ID,
 } from "react-native-dotenv";
 
-const HomeScreen = ({ navigation, route }) => {
+const HomeScreen = (props) => {
   //const navigation = useNavigation()
+
+  //console.log("props HomeScreen",props)
+
+  console.log("props", props.updateUserData)
 
   const [firebaseToken, setFirebaseToken] = useState();
   const [phone, setPhone] = useState(null);
@@ -57,6 +61,7 @@ const HomeScreen = ({ navigation, route }) => {
   const [products, setProducts] = useState([]);
   const [places, setPlaces] = useState([]);
   const [initalRegion, setInitalRegion] = useState([]);
+  
   const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -66,16 +71,21 @@ const HomeScreen = ({ navigation, route }) => {
         activeOpacity={1}
         itemData={item}
         onPress={() =>
-          navigation.navigate("NewsItemDetails", { itemData: item }, navigation)
+          props.navigation.navigate("NewsItemDetails", { itemData: item }, props.navigation)
         }
       >
         <View style={styles.NewsItemBlock}>
           <Image style={styles.NewsItemImage} source={{ uri: item.img }} />
-          <Text style={styles.NewsItemTitle}>{item.title}</Text>
-          <Text style={styles.NewsItemDesc}>{item.desc}</Text>
+           
+            <Text style={styles.NewsItemTitle}>{item.title}</Text>
+
+
+            {/* <View><Text>{item.desc}</Text></View> */}
+            
         </View>
       </TouchableOpacity>
     );
+    console.log(item.desc.slice(0, 19))
   };
 
   const _renderProducts = ({ item }) => {
@@ -84,10 +94,10 @@ const HomeScreen = ({ navigation, route }) => {
         activeOpacity={1}
         itemData={item}
         onPress={() =>
-          navigation.navigate(
+          props.navigation.navigate(
             "ProductItemDetails",
             { itemData: item },
-            navigation
+            props.navigation
           )
         }
       >
@@ -157,10 +167,6 @@ const HomeScreen = ({ navigation, route }) => {
     });
 
     console.log("useEffect");
-
-
-
-
 
 
   }, []);
@@ -235,7 +241,15 @@ const HomeScreen = ({ navigation, route }) => {
     )
       .then((response) => response.json())
       .then((userData) => {
-        console.log("getIikoUserInfoByPhone userData", userData);
+
+
+        console.log("---", userData)
+
+        props.updateUserData(userData)
+
+
+
+        //console.log("getIikoUserInfoByPhone userData", userData);
         if (userData.httpStatusCode == 400 && userData.code == null) {
           // create new user
           console.log("addIikoUserByPhone start");
@@ -292,8 +306,8 @@ const HomeScreen = ({ navigation, route }) => {
               inactiveSlideScale={1}
               inactiveSlideOpacity={1}
               data={news}
-              sliderWidth={200}
-              itemWidth={220}
+              sliderWidth={210}
+              itemWidth={280}
               renderItem={_renderNews}
               onSnapToItem={(index) => setNewsActiveIndex(index)}
             />
@@ -320,20 +334,19 @@ const HomeScreen = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      
+    <View style={styles.container}> 
       <ImageBackground
         source={bgImage}
         resizeMode="repeat"
         style={styles.bgImage}
       >
         <View style={styles.logoContainer}>
-          <Header navigation={navigation} showBack={false} showReload={false} />
+          <Header navigation={props.navigation} showBack={false} showReload={false} />
         </View>
         <View style={styles.barcodeContainer}>
           <View style={styles.barcodeInner}>
             <TouchableOpacity
-              onPress={() => navigation.navigate("DiscountBigScreen", {balance: balance, phone: phone}, navigation)}
+              onPress={() => props.navigation.navigate("DiscountBigScreen", {balance: balance, phone: phone}, props.navigation)}
             >
               <View>
                 {phone == null ? (
@@ -430,7 +443,7 @@ const HomeScreen = ({ navigation, route }) => {
         <View style={styles.categoryContainer}>
           <TouchableOpacity
             style={styles.categoryBtn}
-            onPress={() => navigation.navigate("SettingsScreen")}
+            onPress={() => props.navigation.navigate("SettingsScreen")}
           >
             <View style={styles.categoryIcon}>
               <SETTINGS width={26} height={26} />
@@ -438,9 +451,20 @@ const HomeScreen = ({ navigation, route }) => {
             <Text style={styles.categoryBtnTxt}>Налаштування</Text>
           </TouchableOpacity>
 
+
           <TouchableOpacity
             style={styles.categoryBtn}
-            onPress={() => navigation.navigate("DiscountDescription")}
+            onPress={() => props.navigation.navigate("EditProfileScreen")}
+          >
+            <View style={styles.categoryIcon}>
+              <SETTINGS width={26} height={26} />
+            </View>
+            <Text style={styles.categoryBtnTxt}>Edit</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() => props.navigation.navigate("DiscountDescription")}
           >
             <View style={styles.categoryIcon}>
               <MAP width={26} height={26} />
@@ -451,10 +475,10 @@ const HomeScreen = ({ navigation, route }) => {
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() =>
-              navigation.navigate(
+              props.navigation.navigate(
                 "ExploreScreen",
                 { places, initalRegion },
-                navigation
+                props.avigation
               )
             }
           >
@@ -469,7 +493,23 @@ const HomeScreen = ({ navigation, route }) => {
   );
 };
 
-export default HomeScreen;
+
+
+
+//export default HomeScreen;
+
+const mapStateToProps = state => {
+  return {
+    userDataReducer: state.userDataReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  updateUserData: (data) => dispatch(updateUserData(data))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+
 
 const styles = StyleSheet.create({
   container: {
@@ -612,9 +652,10 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   NewsItemBlock: {
+    flexDirection: 'row',
     backgroundColor: "#fff",
     borderRadius: 5,
-    width: 200,
+    width: 260,
     marginRight: 15,
     shadowColor: "#000",
     shadowOffset: {
@@ -626,13 +667,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   NewsItemImage: {
-    width: 139,
+    width: 140,
     height: 83,
     borderRadius: 5,
   },
   NewsItemTitle: {
+    width: 140,
     fontSize: 12,
-    width: "50%",
     padding: 10,
   },
   NewsItemDesc: {},

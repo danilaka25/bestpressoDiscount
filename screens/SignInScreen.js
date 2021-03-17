@@ -33,14 +33,7 @@ const { Value, Text: AnimatedText } = Animated;
 
 const SignInScreen = ({ navigation }) => {
   const { colors } = useTheme();
-
-  const [confirm, setConfirm] = useState(null);
-
   const [phoneNumber, setPhoneNumber] = useState("");
-
-  const [tokenWasReceived, setTokenWasReceived] = useState(false);
-
-
   const [disableBtn, setDisableBtn] = useState(true);
 
   const onChangedPhone = (text) => {
@@ -56,7 +49,6 @@ const SignInScreen = ({ navigation }) => {
           setDisableBtn(true);
         }
 
-
       } else {
         Alert.alert("please enter numbers only");
       }
@@ -70,14 +62,7 @@ const SignInScreen = ({ navigation }) => {
       const confirmation = await auth().signInWithPhoneNumber(
         prefix + phoneNumber
       );
-
-      
-
-      setTokenWasReceived(true);
-
       navigation.navigate("ConfirmScreen", { confirm: confirmation , phoneNumber: phoneNumber}, navigation);
-
-      console.log(confirmation._verificationId);
     } else {
       Alert.alert("not correct number");
     }
@@ -191,16 +176,12 @@ const styles = StyleSheet.create({
     color: "grey",
     marginBottom: 20
   },
-  button: {
-    // marginTop: 30,
-  },
   fieldInputRow: {
     flexDirection: "row",
 
     alignItems: "center",
   },
   fieldInputPrefix: {
-    // flex: 1,
     fontSize: 20,
     marginRight: 20
   },
