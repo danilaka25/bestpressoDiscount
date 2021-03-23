@@ -2,38 +2,51 @@ import { StyleSheet, Platform, Dimensions } from "react-native";
 export const CELL_SIZE = 40;
 export const CELL_BORDER_RADIUS = 8;
 export const DEFAULT_CELL_BG_COLOR = "#ccc";
-export const NOT_EMPTY_CELL_BG_COLOR = "#6AAE36";
-export const ACTIVE_CELL_BG_COLOR = "#6AAE31";
+export const NOT_EMPTY_CELL_BG_COLOR = "#f6f8fa";
+export const ACTIVE_CELL_BG_COLOR = "#f6f8fa";
 const { height, width } = Dimensions.get("screen");
-const height_logo = height * 0.38;
+
+
+const screen = Dimensions.get('screen').height;
+const window = Dimensions.get('window').height;
+
+
+//const height_logo = height * 0.38;
 
 const styles = StyleSheet.create({
+  inner: {
+    flex: 1,
+  },
   container: {
     flex: 1,
+    height: "100%",
   },
   bgImage: {
-    flex: 1,
-    width: width,
-    height: height,
+    position: 'absolute',
+    bottom: 0,
+    width: "100%",
+    height: "100%",
   },
   header: {
-    height: '50%',
+    flex: 1,
+    position: 'absolute',
+    bottom: 300,
     width: '100%',
+    height: window - 300,
     justifyContent: "center",
     alignItems: "center",
-    position: 'absolute',
-    top: 0
   },
   footer: {
-    position: 'absolute',
-    width: '100%',
-    bottom: 0,
-    flex: 1,
+    height: 300,
     backgroundColor: "#fff",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingVertical: 40,
+    // borderBottomRightRadius: 30,
+    // borderBottomLeftRadius: 30,
+    paddingVertical: 50,
     paddingHorizontal: 30,
+    position: 'absolute',
+    bottom: 0,
   },
   logo: {
     // width: height_logo,

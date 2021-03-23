@@ -19,7 +19,7 @@ const SplashScreen = ({ navigation }) => {
     const { colors } = useTheme();
 
     return (
-        <View style={styles.container}>
+        
             <ImageBackground source={bgImage} resizeMode='repeat' style={styles.bgImage}>
 
 
@@ -57,8 +57,9 @@ const SplashScreen = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                 </Animatable.View>
+            
             </ImageBackground>
-        </View>
+        
     );
 };
 

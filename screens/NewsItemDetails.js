@@ -1,13 +1,9 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
   View,
   Text,
   Image,
   StyleSheet,
-  Dimensions,
-  StatusBar,
-  Platform,
-  TouchableOpacity,
   ImageBackground,
   SafeAreaView,
   ScrollView,
@@ -16,15 +12,11 @@ import {
 
 import HTMLView from "react-native-htmlview";
 import Header from "../components/Header";
-
 import bgImage from "../assets/pattern2.jpg";
 
-const win = Dimensions.get("window");
-const ratio = win.width / 300; //541 is actual image width
-
 const NewsItemDetails = ({ route, navigation }) => {
+  
   const itemData = route.params.itemData;
-
   const scrollY = new Animated.Value(0);
   const diffClamp = Animated.diffClamp(scrollY, 0, 65);
   const translateY = diffClamp.interpolate({
@@ -48,11 +40,10 @@ const NewsItemDetails = ({ route, navigation }) => {
       >
         <Header navigation={navigation} showBack={true} showReload={false} />
       </Animated.View>
-
       <SafeAreaView style={styles.scrollArea}>
         <ScrollView
           style={styles.scrollView}
-          scrollEventThrottle={16}
+          scrollEventThrottle={6}
           onScroll={(e) => {
             scrollY.setValue(e.nativeEvent.contentOffset.y);
           }}
@@ -63,7 +54,6 @@ const NewsItemDetails = ({ route, navigation }) => {
               style={styles.newsImage}
               resizeMode="cover"
             />
-
             <Text style={styles.title}>{itemData.title}</Text>
             <HTMLView
               addLineBreaks={false}
@@ -80,18 +70,20 @@ const NewsItemDetails = ({ route, navigation }) => {
 
 export default NewsItemDetails;
 
-
-
 const htmlStyles = StyleSheet.create({
   a: {
     fontWeight: '600',
     color: '#FF3366',
   },
   p: {
-    marginBottom: 5,
-    paddingBottom: 5,
+    marginBottom: 0,
+    paddingBottom: 0,
+    fontSize: 16
+  },
+  b: {
+    fontSize: 18,
+    fontWeight: "bold"
   }
-
 })
 
 const styles = StyleSheet.create({
@@ -116,13 +108,13 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     width: "100%",
-   
+
   },
   newsImage: {
     width: '100%',
     height: 250,
     marginBottom: 10,
-    borderRadius: 15,
+    borderRadius: 10,
   },
   section: {
     flex: 1,
@@ -130,15 +122,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 10,
     overflow: "hidden",
-    marginBottom: 30,
+    marginBottom: 20,
     alignSelf: "center",
-    marginTop: 100,
+    marginTop: 85,
     shadowColor: "#999",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
-
   },
   title: {
     fontSize: 30,
@@ -155,8 +146,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   sectionContent: {
-    fontSize: 28,
-    color: "#ffffff",
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    paddingBottom: 15
   },
 });

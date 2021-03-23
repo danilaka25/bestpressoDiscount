@@ -5,9 +5,7 @@ import {
   Image,
   StyleSheet,
   Dimensions,
-  StatusBar,
-  Platform,
-  TouchableOpacity,
+  Animated,
   ImageBackground,
   SafeAreaView,
   ScrollView,
@@ -23,8 +21,18 @@ import bgImage from "../assets/pattern2.jpg";
 
 const ProductItemDetails = ({ route, navigation }) => {
 
+
+
   const itemData = route.params.itemData;
   let countItems = itemData.variations.length;
+
+
+  const scrollY = new Animated.Value(0);
+  const diffClamp = Animated.diffClamp(scrollY, 0, 65);
+  const translateY = diffClamp.interpolate({
+    inputRange: [0, 65],
+    outputRange: [0, -65],
+  });
 
   const renderPrices = () => {
     if (countItems == 1) {
@@ -82,17 +90,38 @@ const ProductItemDetails = ({ route, navigation }) => {
       style={styles.bgImage}
     >
       
-      <Header navigation={navigation} showBack={true} showReload={false} />
+      <Animated.View
+        style={[
+          styles.headerFixed,
+          {
+            transform: [{ translateY: translateY }],
+          },
+        ]}
+      >
+        <Header navigation={navigation} showBack={true} showReload={false} />
+      </Animated.View>
       <SafeAreaView style={styles.scrollArea}>
-      <ScrollView style={styles.scrollView}>
-          <View style={styles.productImageBg}>
-            <Image source={{ uri: itemData.img }} style={styles.productImage} resizeMode="cover"/>
-          </View>
+      <ScrollView 
+        style={styles.scrollView}
+        scrollEventThrottle={16}
+        onScroll={(e) => {
+          scrollY.setValue(e.nativeEvent.contentOffset.y);
+        }}
+        >
+
           <View style={styles.section}>
-          <Text style={styles.title}>{itemData.title}</Text>
+           
+            <Image source={{ uri: itemData.img }} style={styles.productImage} resizeMode="cover"/>
+          
+           <View style={styles.sectionContent}>
+            <Text style={styles.title}>{itemData.title}</Text>
             {renderPrices()}
-            <HTMLView value={itemData.text} stylesheet={styles.title} />
-            <Text style={styles.sectionContent}>{itemData.title}</Text>
+            <HTMLView 
+              addLineBreaks={false}
+              value={itemData.text} 
+              stylesheet={htmlStyles}/>
+            
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -102,7 +131,33 @@ const ProductItemDetails = ({ route, navigation }) => {
 
 export default ProductItemDetails;
 
+
+const htmlStyles = StyleSheet.create({
+  a: {
+    fontWeight: '600',
+    color: '#FF3366',
+  },
+  p: {
+    marginBottom: 0,
+    paddingBottom: 0,
+    fontSize: 16
+  }
+
+})
+
 const styles = StyleSheet.create({
+
+  headerFixed: {
+    elevation: 4,
+    zIndex: 999,
+    alignItems: "center",
+    backgroundColor: "#fff",
+    width: "100%",
+    height: 65,
+    alignItems: "center",
+    justifyContent: "center",
+    position: 'absolute'
+  },
    
   priceRow: {
     flexDirection: 'row',
@@ -141,8 +196,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   bgImage: {
-    paddingBottom: 20,
-    alignItems: "center",
+    position: "absolute",
+    width: "100%",
+    height: "100%",
   },
   scrollArea: {
     width: "100%",
@@ -158,30 +214,27 @@ const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: 30,
   },
-  productImageBg: {
-    marginTop: 70,
-  },
+
   productImage: {
-    width: '90%', 
-    height: 160,
-    overflow: 'visible',
-    borderRadius: 5,
-    alignSelf: "center",
-    marginTop: 10,
+    width: '100%',
+    height: 290,
     marginBottom: 10,
+    borderRadius: 15,
   },
   section: {
     flex: 1,
     width: "90%",
-    alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#cccccc",
-    padding: 20,
+    backgroundColor: "#fff",
     borderRadius: 10,
     overflow: "hidden",
-    marginBottom: 50,
+    marginBottom: 20,
     alignSelf: "center",
-    marginTop: -20,
+    marginTop: 85,
+    shadowColor: "#999",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
   },
   image: {
     height: 200,
@@ -189,8 +242,18 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     resizeMode: "cover",
   },
+  sectionContent: {
+    paddingHorizontal: 15,
+    paddingBottom: 0,
+    fontSize: 18,
+  },
   title: {
+    display: 'flex',
     fontSize: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    alignSelf: 'stretch'
   },
   name: {
     fontWeight: "bold",
@@ -199,8 +262,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  sectionContent: {
-    fontSize: 18,
-    color: "#ffffff",
-  },
+ 
 });

@@ -8,6 +8,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  Dimensions
 } from "react-native";
 
 import Barcode from "react-native-barcode-builder";
@@ -20,9 +21,8 @@ import SvgAnimatedLinearGradient from "react-native-svg-animated-linear-gradient
 import Svg, { Rect } from "react-native-svg";
 
 import bgImage from "../assets/pattern2.jpg";
-import LOGO from "../assets/svg/logo.svg";
 import STAR from "../assets/svg/star.svg";
-import INFO from "../assets/svg/star.svg";
+import INFO from "../assets/svg/info.svg";
 import SETTINGS from "../assets/svg/settings.svg";
 import MAP from "../assets/svg/map.svg";
 import MENU from "../assets/svg/menu.svg";
@@ -31,9 +31,10 @@ import NEWS from "../assets/svg/newspaper.svg";
 import CUP_Active from "../assets/svg/coffee-cup-active.svg";
 import NEWS_Active from "../assets/svg/newspaper-active.svg";
 
-
 import {connect} from 'react-redux';
-import {updateUserData} from './../redux/actions/userDataActions';
+import { bindActionCreators } from 'redux';
+import {fetchIikoPending, fetchIikoSuccess, fetchIikoError} from './../redux/actions/userDataActions';
+import {fetchUserData} from './../redux/actions/fetchUserData';
 
 import {
   IIKO_LOGIN,
@@ -41,10 +42,13 @@ import {
   IIKO_ORGANIZATION_ID,
 } from "react-native-dotenv";
 
-const HomeScreen = (props) => {
-  //const navigation = useNavigation()
 
-  //console.log("props HomeScreen",props)
+const { width: screenWidth } = Dimensions.get('window')
+
+
+const HomeScreen = (props) => {
+  
+  
 
   console.log("props", props.updateUserData)
 
@@ -65,9 +69,25 @@ const HomeScreen = (props) => {
   const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoading] = useState(true);
 
+
+  const substrNewsTitle = (title) => {
+
+    let length = 62
+    let tempTitle = title.substr(0, length)
+    let tempDots = ' ... '
+    
+    if (title.length >= length) {
+      return tempTitle + tempDots
+    } else {
+      return title
+    }
+
+  }
+
   const _renderNews = ({ item }) => {
     return (
       <TouchableOpacity
+        style={{marginLeft: 25, marginRight: 25}}
         activeOpacity={1}
         itemData={item}
         onPress={() =>
@@ -75,22 +95,19 @@ const HomeScreen = (props) => {
         }
       >
         <View style={styles.NewsItemBlock}>
-          <Image style={styles.NewsItemImage} source={{ uri: item.img }} />
-           
-            <Text style={styles.NewsItemTitle}>{item.title}</Text>
-
-
-            {/* <View><Text>{item.desc}</Text></View> */}
+          
+          <Image style={styles.NewsItemImage} source={{ uri: item.img }} /> 
+          <Text style={styles.NewsItemTitle}>{substrNewsTitle(item.title)}</Text>
             
         </View>
       </TouchableOpacity>
     );
-    console.log(item.desc.slice(0, 19))
   };
 
   const _renderProducts = ({ item }) => {
     return (
       <TouchableOpacity
+        style={{marginLeft: 25}}
         activeOpacity={1}
         itemData={item}
         onPress={() =>
@@ -150,23 +167,30 @@ const HomeScreen = (props) => {
 
   useEffect(() => {
     (async () => {
-      await console.log("firebase start");
+      //await console.log("firebase start");
       await getAllDataFromFirebaseDb();
       await setLoading(false);
-      await console.log("firebase loaded");
+      //await console.log("firebase loaded");
     })();
 
     getPhoneAndIikoToken().then((data) => {
-      getIikoUserInfoByPhone(data[0], data[1]);
+      
+      
+      //getIikoUserInfoByPhone(data[0], data[1]);
+      props.fetchUserData()
+
+      console.log("userDataReducer((((", props.userDataReducer.iikoUserData.walletBalances[0].balance)
 
 
-      setTimeout(() => 
-      getIikoUserInfoByPhone(data[0], data[1])
-      , 15000);
+      setBalance(props.userDataReducer.iikoUserData.walletBalances[0].balance)
+      // setTimeout(() => 
+      // getIikoUserInfoByPhone(data[0], data[1])
+      
+      // , 6000);
 
     });
 
-    console.log("useEffect");
+    // console.log("userDataReducer", props.userDataReducer);
 
 
   }, []);
@@ -185,7 +209,7 @@ const HomeScreen = (props) => {
   };
 
   const addIikoUserByPhone = (phone, token) => {
-    ///api/0/customers/create_or_update?access_token={accessToken}&organization={organizationId}
+    console.log("post user START");
     fetch(
       "https://card.iiko.co.uk/api/0/customers/create_or_update?access_token=" +
         token +
@@ -197,7 +221,7 @@ const HomeScreen = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          customer: { phone: phone },
+          customer: { phone: phone,  magnetCardTrack: generateCardNumber(phone)},
         }),
       }
     )
@@ -209,6 +233,19 @@ const HomeScreen = (props) => {
         console.log("error", err);
       });
   };
+
+  const generateCardNumber = (phoneNumber) => {
+    let phone = phoneNumber; // 10
+    phone = phone.split('+38').join('');
+    let arr = [];
+    for (let char of phone) {
+      arr.push(char);
+    }
+    let cardNumber = "0000" + arr[0] + arr[3] + arr[1] + arr[8] + arr[9] + arr[2] + arr[4] + arr[7] + arr[6] + arr[5]
+
+    //console.log("arr", cardNumber)
+    return cardNumber
+  }
 
   const getIikoAuthToken = () => {
     return fetch(
@@ -243,7 +280,7 @@ const HomeScreen = (props) => {
       .then((userData) => {
 
 
-        console.log("---", userData)
+        console.log("---userData---", userData)
 
         props.updateUserData(userData)
 
@@ -253,9 +290,15 @@ const HomeScreen = (props) => {
         if (userData.httpStatusCode == 400 && userData.code == null) {
           // create new user
           console.log("addIikoUserByPhone start");
-          addIikoUserByPhone(phone, token);
+
+
+          addIikoUserByPhone(phone, token)
+          //setBalance(0);
+
         } else {
-          setBalance(userData.walletBalances[0].balance);
+           // set balance
+           console.log("set balance");
+          //setBalance(userData.walletBalances[0].balance);
         }
       })
       .catch((err) => {
@@ -300,27 +343,28 @@ const HomeScreen = (props) => {
           <View style={styles.SliderWrapper}>
             <Carousel
               layout={"default"}
-              loop={true}
-              enableSnap={true}
-              activeSlideAlignment={"start"}
-              inactiveSlideScale={1}
-              inactiveSlideOpacity={1}
+              loop={false}
+              //enableSnap={true}
+              // activeSlideAlignment={"start"}
+              // inactiveSlideScale={1}
+              // inactiveSlideOpacity={1}
               data={news}
-              sliderWidth={210}
+              sliderWidth={250}
               itemWidth={280}
               renderItem={_renderNews}
               onSnapToItem={(index) => setNewsActiveIndex(index)}
+             
             />
           </View>
         ) : (
           <View style={styles.SliderWrapper}>
             <Carousel
               layout={"default"}
-              loop={true}
-              enableSnap={true}
-              activeSlideAlignment={"start"}
-              inactiveSlideScale={1}
-              inactiveSlideOpacity={1}
+              loop={false}
+              //enableSnap={true}
+              //activeSlideAlignment={"start"}
+              // inactiveSlideScale={1}
+              // inactiveSlideOpacity={1}
               data={products}
               sliderWidth={150}
               itemWidth={160}
@@ -341,7 +385,7 @@ const HomeScreen = (props) => {
         style={styles.bgImage}
       >
         <View style={styles.logoContainer}>
-          <Header navigation={props.navigation} showBack={false} showReload={false} />
+          <Header navigation={props.navigation} showBack={false} showReload={false} showInfo={true}/>
         </View>
         <View style={styles.barcodeContainer}>
           <View style={styles.barcodeInner}>
@@ -353,10 +397,11 @@ const HomeScreen = (props) => {
                   <Text>No bonus</Text>
                 ) : (
                   <Barcode
-                    value={phone}
+                    value={generateCardNumber(phone)}
                     format="CODE128"
                     background="#fff"
                     lineColor="#000"
+                    // width="3"
                   />
                 )}
               </View>
@@ -504,9 +549,12 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  updateUserData: (data) => dispatch(updateUserData(data))
-});
+
+function mapDispatchToProps(dispatch) {
+  return {
+      ...bindActionCreators({ fetchUserData }, dispatch)
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 
@@ -650,12 +698,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "95%",
     alignSelf: "flex-end",
+    //position: 'absolute'
   },
   NewsItemBlock: {
     flexDirection: 'row',
     backgroundColor: "#fff",
     borderRadius: 5,
-    width: 260,
+    width: 270,
+    height: 120,
     marginRight: 15,
     shadowColor: "#000",
     shadowOffset: {
@@ -667,13 +717,14 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   NewsItemImage: {
-    width: 140,
-    height: 83,
+    width: 120,
+    height: 120,
     borderRadius: 5,
   },
   NewsItemTitle: {
     width: 140,
-    fontSize: 12,
+    height: 120,
+    fontSize: 14,
     padding: 10,
   },
   NewsItemDesc: {},

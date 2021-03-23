@@ -1,11 +1,16 @@
+
+
 const initialAuthState = {
   isLoading: true,
   isSignout: false,
   fireBaseToken: null,
 };
 
+
+
+
 export const authReducer = (state = initialAuthState, action) => {
-  console.log("reducer action", action)
+  //console.log("reducer action", action)
   switch (action.type) {
     case "RESTORE_TOKEN":
       console.log("reducer RESTORE_TOKEN")

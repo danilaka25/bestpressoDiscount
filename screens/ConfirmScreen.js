@@ -7,6 +7,7 @@ import {
   Animated,
   ImageBackground,
   KeyboardAvoidingView,
+  SafeAreaView
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import LinearGradient from "react-native-linear-gradient";
@@ -35,11 +36,11 @@ import styles, {
   NOT_EMPTY_CELL_BG_COLOR,
 } from "../styles/confirmStyles";
 
-import{ AuthContext } from '../components/context';
-import {connect} from 'react-redux';
-import {signIn} from './../redux/actions/authActions';
+import { AuthContext } from '../components/context';
+import { connect } from 'react-redux';
+import { signIn } from './../redux/actions/authActions';
 
-const ConfirmScreen = ( props ) => {
+const ConfirmScreen = (props) => {
 
   //console.log("route ConfirmScreen", props.signIn)
 
@@ -70,13 +71,13 @@ const ConfirmScreen = ( props ) => {
     const animatedCellStyle = {
       backgroundColor: hasValue
         ? animationsScale[index].interpolate({
-            inputRange: [0, 1],
-            outputRange: [NOT_EMPTY_CELL_BG_COLOR, ACTIVE_CELL_BG_COLOR],
-          })
+          inputRange: [0, 1],
+          outputRange: [NOT_EMPTY_CELL_BG_COLOR, ACTIVE_CELL_BG_COLOR],
+        })
         : animationsColor[index].interpolate({
-            inputRange: [0, 1],
-            outputRange: [DEFAULT_CELL_BG_COLOR, ACTIVE_CELL_BG_COLOR],
-          }),
+          inputRange: [0, 1],
+          outputRange: [DEFAULT_CELL_BG_COLOR, ACTIVE_CELL_BG_COLOR],
+        }),
       borderRadius: animationsScale[index].interpolate({
         inputRange: [0, 1],
         outputRange: [CELL_SIZE, CELL_BORDER_RADIUS],
@@ -138,59 +139,76 @@ const ConfirmScreen = ( props ) => {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+
+    <ImageBackground
+      source={bgImage}
+      resizeMode="repeat"
+      style={styles.bgImage}
     >
-      <ImageBackground
-        source={bgImage}
-        resizeMode="repeat"
-        style={styles.bgImage}
+      <KeyboardAvoidingView
+        behavior='padding'
+        keyboardVerticalOffset={
+          Platform.select({
+            ios: () => 0,
+            android: () => -80
+          })()
+        }
+        style={{ flex: 1 }}
       >
-        <Animatable.View
-          style={styles.header}
-          animation="bounceIn"
-          duraton="3500"
-        >
-          <LOGO width="290" height="100" />
-        </Animatable.View>
 
-        <Animatable.View style={styles.footer} animation="fadeInUpBig">
-          <Text style={styles.title}>Введите код с СМС</Text>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.inner}>
 
-          <CodeField
-            ref={ref}
-            {...props2}
-            value={value}
-            onChangeText={(value) => fieldChanged(value)}
-            cellCount={CELL_COUNT}
-            rootStyle={styles.codeFieldRoot}
-            keyboardType="number-pad"
-            textContentType="oneTimeCode"
-            renderCell={renderConfirmCell}
-          />
-
-          <View style={styles.signInRow}>  
-            <TouchableOpacity
-              disabled={disableBtn}
-              onPress={() => confirmCode()}  
+            <Animatable.View
+              style={styles.header}
+              animation="bounceIn"
+              duraton="3500"
             >
-              <LinearGradient
-                colors={ disableBtn ? ["#ccc", "#ccc"] : ["#cd002a", "#cd0000"]}
-                style={styles.signIn}
-              >
-                <Text style={styles.textSign}>Отправить</Text>
-                <MaterialIcons name="navigate-next" color="#fff" size={20} />
-              </LinearGradient>
-            </TouchableOpacity>
+              <LOGO width="290" height="100" />
+            </Animatable.View>
+
+            <Animatable.View style={styles.footer} animation="fadeInUpBig">
+              <Text style={styles.title}>Введите код с СМС</Text>
+
+              <CodeField
+                ref={ref}
+                {...props2}
+                value={value}
+                onChangeText={(value) => fieldChanged(value)}
+                cellCount={CELL_COUNT}
+                rootStyle={styles.codeFieldRoot}
+                keyboardType="number-pad"
+                textContentType="oneTimeCode"
+                renderCell={renderConfirmCell}
+                autoFocus={true}
+              />
+
+              <View style={styles.signInRow}>
+                <TouchableOpacity
+                  disabled={disableBtn}
+                  onPress={() => confirmCode()}
+                >
+                  <LinearGradient
+                    colors={disableBtn ? ["#ccc", "#ccc"] : ["#cd002a", "#cd0000"]}
+                    style={styles.signIn}
+                  >
+                    <Text style={styles.textSign}>Отправить</Text>
+                    <MaterialIcons name="navigate-next" color="#fff" size={20} />
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
+            </Animatable.View>
+
+
           </View>
-        </Animatable.View>
-      </ImageBackground>
-    </KeyboardAvoidingView>
+        </SafeAreaView>
+
+      </KeyboardAvoidingView>
+    </ImageBackground>
+
   );
 };
 
-// export default ConfirmScreen;
 
 const mapStateToProps = state => {
   return {

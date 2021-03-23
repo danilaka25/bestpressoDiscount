@@ -5,13 +5,10 @@ import {
   View,
   Animated,
   Image,
-  TouchableOpacity,
   Dimensions,
   Platform,
 } from "react-native";
-import MapView, {PROVIDER_GOOGLE} from "react-native-maps";
-
-import { useTheme } from '@react-navigation/native';
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import Header from '../components/Header';
 
 const mapStandardStyle = [
@@ -26,26 +23,15 @@ const mapStandardStyle = [
 ];
 
 const { width, height } = Dimensions.get("window");
-const CARD_HEIGHT = 220;
+const CARD_HEIGHT = 250;
 const CARD_WIDTH = width * 0.8;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
-const ExploreScreen = ({ route, navigation}) => {
-
-
-
-  //console.log("route", route.params)
-
-  const theme = useTheme();
+const ExploreScreen = ({ route, navigation }) => {
+ 
   const initialMapState = {
     markers: route.params.places,
     region: route.params.initalRegion[0],
-    // region: {
-    //   latitude: 50.41429494075907, 
-    //   longitude: 30.520019533835047, 
-    //   latitudeDelta: 0.0922,
-    //   longitudeDelta: 0.0421,
-    // },
   };
 
   const [state, setState] = React.useState(initialMapState);
@@ -54,9 +40,6 @@ const ExploreScreen = ({ route, navigation}) => {
   let mapAnimation = new Animated.Value(0);
 
   useEffect(() => {
-
-    //setState({markers: route.params.places})
-
 
     mapAnimation.addListener(({ value }) => {
       let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
@@ -70,7 +53,7 @@ const ExploreScreen = ({ route, navigation}) => {
       clearTimeout(regionTimeout);
 
       const regionTimeout = setTimeout(() => {
-        if( mapIndex !== index ) {
+        if (mapIndex !== index) {
           mapIndex = index;
           const { coordinate } = state.markers[index];
           _map.current.animateToRegion(
@@ -105,12 +88,12 @@ const ExploreScreen = ({ route, navigation}) => {
   const onMarkerPress = (mapEventData) => {
     const markerID = mapEventData._targetInst.return.key;
 
-    let x = (markerID * CARD_WIDTH) + (markerID * 20); 
+    let x = (markerID * CARD_WIDTH) + (markerID * 20);
     if (Platform.OS === 'ios') {
       x = x - SPACING_FOR_CARD_INSET;
     }
 
-    _scrollView.current.scrollTo({x: x, y: 0, animated: true});
+    _scrollView.current.scrollTo({ x: x, y: 0, animated: true });
   }
 
   const _map = React.useRef(null);
@@ -135,7 +118,7 @@ const ExploreScreen = ({ route, navigation}) => {
             ],
           };
           return (
-            <MapView.Marker key={index} coordinate={marker.coordinate} onPress={(e)=>onMarkerPress(e)}>
+            <MapView.Marker key={index} coordinate={marker.coordinate} onPress={(e) => onMarkerPress(e)}>
               <Animated.View style={[styles.markerWrap]}>
                 <Animated.Image
                   source={require('../assets/map_marker.png')}
@@ -175,20 +158,20 @@ const ExploreScreen = ({ route, navigation}) => {
               },
             },
           ],
-          {useNativeDriver: true}
+          { useNativeDriver: true }
         )}
       >
-        {state.markers.map((marker, index) =>(
+        {state.markers.map((marker, index) => (
           <View style={styles.card} key={index}>
-            <Image 
-              source={{uri:marker.image}}
+            <Image
+              source={{ uri: marker.image }}
               style={styles.cardImage}
               resizeMode="cover"
             />
             <View style={styles.textContent}>
               <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
-               <Text numberOfLines={1} style={styles.cardDescription}>{marker.description}</Text>
-               
+              <Text numberOfLines={1} style={styles.cardDescription}>Будні {marker.weekdays}</Text>
+              <Text numberOfLines={1} style={styles.cardDescription}>Вихідні {marker.weekend}</Text>
             </View>
           </View>
         ))}
@@ -204,8 +187,8 @@ const styles = StyleSheet.create({
   back: {
     position: 'absolute',
     zIndex: 1,
-    left:     20,
-    top:      20,
+    left: 20,
+    top: 20,
   },
   scrollView: {
     position: "absolute",
@@ -218,7 +201,6 @@ const styles = StyleSheet.create({
     paddingRight: width - CARD_WIDTH,
   },
   card: {
-    // padding: 10,
     elevation: 2,
     backgroundColor: "#FFF",
     borderTopLeftRadius: 5,
@@ -233,7 +215,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   cardImage: {
-    flex: 3,
+    flex: 2,
     width: "100%",
     height: "100%",
     alignSelf: "center",
@@ -243,11 +225,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   cardtitle: {
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: "bold",
   },
   cardDescription: {
-    fontSize: 12,
+    marginTop: 6,
+    fontSize: 14,
     color: "#444",
   },
   cardTime: {
@@ -257,8 +240,8 @@ const styles = StyleSheet.create({
   markerWrap: {
     alignItems: "center",
     justifyContent: "center",
-    width:50,
-    height:50,
+    width: 50,
+    height: 50,
   },
   marker: {
     width: 30,
@@ -269,11 +252,11 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   signIn: {
-      width: '100%',
-      padding:5,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 3
+    width: '100%',
+    padding: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 3
   },
-  
+
 });

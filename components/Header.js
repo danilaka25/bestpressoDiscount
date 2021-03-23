@@ -1,26 +1,23 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import LOGO from "../assets/svg/logo.svg";
 import BACK from "../assets/svg/back.svg";
 import RELOAD from "../assets/svg/reload.svg";
-import INFO from "../assets/svg/star.svg";
+import INFO from "../assets/svg/info.svg";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchUserData } from './../redux/actions/fetchUserData';
 
+const Header = (props, { navigation }) => {
 
-const Header = (props, {navigation} ) => {
-  
-  console.log(props.showReload);
-
-  const [uniqueValue, setUniqueValue] = useState(1);
-
-  const forceRemount = () => {
-    setUniqueValue(uniqueValue + 1);
-    console.log("header reload");
+  const updateBalance = () => {
+    props.fetchUserData()
   };
 
   const displayReload = () => {
     if (props.showReload) {
       return (
-        <TouchableOpacity style={styles.reload} onPress={() => forceRemount()}>
+        <TouchableOpacity style={styles.reload} onPress={() => updateBalance()}>
           <RELOAD />
         </TouchableOpacity>
       );
@@ -44,11 +41,17 @@ const Header = (props, {navigation} ) => {
     }
   };
 
-
   const displayInfo = () => {
     if (props.showInfo) {
       return (
-        <TouchableOpacity style={styles.reload} oonPress={() => props.navigation("DiscountDescription")}>
+        <TouchableOpacity style={styles.reload} 
+        onPress={() =>
+          props.navigation.navigate(
+            "DiscountDescription",
+            props.navigation
+          )
+        }
+        >
           <INFO />
         </TouchableOpacity>
       );
@@ -67,14 +70,19 @@ const Header = (props, {navigation} ) => {
   );
 };
 
-export default Header;
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({ fetchUserData }, dispatch)
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Header);
 
 const styles = StyleSheet.create({
   header: {
     display: "flex",
     width: "100%",
     height: 65,
-
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -83,9 +91,6 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex: 99,
     flex: 1,
-  },
-  logo: {
-    // alignSelf: 'center',
   },
   back: {
     position: "absolute",

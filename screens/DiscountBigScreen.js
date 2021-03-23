@@ -5,22 +5,46 @@ import {
   Text,
   SafeAreaView,
   StyleSheet,
+  TouchableOpacity
 } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import * as Animatable from "react-native-animatable";
 import STAR from "../assets/svg/star.svg";
 import bgImage from "../assets/pattern2.jpg";
 import Header from "../components/Header";
+import INFO from "../assets/svg/info.svg";
 
-import {connect} from 'react-redux';
-import {updateUserData} from './../redux/actions/userDataActions';
+import { connect } from 'react-redux';
+import { updateUserData } from './../redux/actions/userDataActions';
 
 const DiscountBigScreen = (props) => {
 
-  console.log("DiscountBigScreen", props)
+  //console.log("DiscountBigScreen", props)
 
-  let {phone} = props.route.params
-  let balance = props.userDataReducer.userData.walletBalances[0].balance
+  let phone = props.userDataReducer.iikoUserData.phone
+  let balance = props.userDataReducer.iikoUserData.walletBalances[0].balance
+
+
+
+
+  const generateCardNumber = (phoneNumber) => {
+    let phone = phoneNumber; // 10
+    phone = phone.split('+38').join('');
+    let arr = [];
+    for (let char of phone) {
+      arr.push(char);
+    }
+    let cardNumber = arr[0] + arr[3] + arr[1] + arr[8] + arr[9] + arr[2] + arr[4] + arr[7] + arr[6] + arr[5]
+
+    //console.log("arr", cardNumber)
+    return cardNumber
+  }
+
+
+
+
+
+
 
   return (
     <>
@@ -48,7 +72,7 @@ const DiscountBigScreen = (props) => {
               ]}
             >
               <Barcode
-                value={phone}
+                value={generateCardNumber(phone)}
                 format="CODE128"
                 background="#fff"
                 lineColor="#000"
@@ -57,15 +81,34 @@ const DiscountBigScreen = (props) => {
             </View>
           </View>
           <View style={styles.bonusWrapper}>
-            <Text style={styles.bonusWrapperTitle}>на вашеи счету</Text>
-            <Text style={styles.bounusWrapperValue}>{balance}</Text>
-            <Animatable.View
-              animation="pulse"
-              easing="ease-out"
-              iterationCount="infinite"
+            
+            <View style={styles.bonusWrapperRow}>
+              <Text style={styles.bonusWrapperTitle}>на вашеи счету</Text>
+              <Text style={styles.bounusWrapperValue}>{balance}</Text>
+              <Animatable.View
+                animation="pulse"
+                easing="ease-out"
+                iterationCount="infinite"
+              >
+                <STAR width={27} height={27} />
+              </Animatable.View>
+            </View>  
+
+
+            <TouchableOpacity 
+            style={styles.bonusWrapperRow}
+            onPress={() =>
+              props.navigation.navigate(
+                "DiscountDescription",
+                props.navigation
+              )
+            }
             >
-              <STAR width={27} height={27} />
-            </Animatable.View>
+              <Text style={styles.bonusWrapperTitle}>Як нараховуються бали</Text>  
+          
+              <INFO />
+            </TouchableOpacity>
+
           </View>
         </ImageBackground>
       </SafeAreaView>
@@ -98,15 +141,30 @@ const styles = StyleSheet.create({
   },
   bonusWrapper: {
     position: 'absolute',
+    flexDirection: 'column',
     width: '100%',
     bottom: 0,
-    flexDirection: 'row',
     alignItems: "center",
-    backgroundColor: "#ccc",
-    height: 60,
+    justifyContent: 'center',
+    backgroundColor: "#fff",
+    height: 90,
     justifyContent: "center",
     padding: 20,
     borderRadius: 10,
+    shadowColor: "#999",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 35,
+
+  },
+  bonusWrapperRow: {
+    width: '100%',
+    height: 45,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+
   },
   bonusWrapperTitle: {},
   bounusWrapperValue: {
@@ -119,5 +177,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 20,
     borderRadius: 10,
+    shadowColor: "#999",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
   },
 });

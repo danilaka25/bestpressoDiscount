@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   ImageBackground,
   View,
@@ -7,18 +7,12 @@ import {
   StyleSheet,
   ScrollView,
   Animated,
-  TouchableOpacity,
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
-
 import STAR from "../assets/svg/star.svg";
-
 import bgImage from "../assets/pattern2.jpg";
-
 import Header from "../components/Header";
-
-import BACK from "../assets/svg/back.svg";
 
 const DiscountDescription = ({ navigation }) => {
   const scrollY = new Animated.Value(0);
@@ -42,8 +36,6 @@ const DiscountDescription = ({ navigation }) => {
           },
         ]}
       >
-       
-
         <Header navigation={navigation} showBack={true} showReload={false} bgTransparent={true} />
       </Animated.View>
       <SafeAreaView style={styles.scrollArea}>
@@ -56,13 +48,12 @@ const DiscountDescription = ({ navigation }) => {
         >
           <View style={styles.section}>
             <Text style={styles.levelTitle}>Система снижок</Text>
-
             <View style={styles.bonusDescBlock}>
               <View style={styles.bonusTextRow}>
                 <Text style={styles.bonusDescText}>
-                  За кожну витрачену гривню{" "}
+                  1 зірка = 1 гривня{" "}
                 </Text>
-                <Text style={styles.bonusDescText}>Ви отримуєте 1 зірку</Text>
+                <Text style={styles.bonusDescTextSmall}>Ви можете розплачуватися зірками замість гривень</Text>
               </View>
               <View>
                 <Animatable.View
@@ -74,73 +65,39 @@ const DiscountDescription = ({ navigation }) => {
                 </Animatable.View>
               </View>
             </View>
-
             <View style={styles.levelBlue}>
               <Text style={styles.levelWhiteTitle}>BLUE LEVEL</Text>
             </View>
-
             <View style={styles.whiteBg}>
-              <Text style={styles.levelTitle}>0-499 зірок/місяц</Text>
-
+              <Text style={styles.levelTitle}>При витратах 0-199 грн/місяць</Text>
               <Text style={styles.levelListItem}>
-                Безкоштовний напій за кожні 340 зірок
-              </Text>
-              <Text style={styles.levelListItem}>
-                Безкоштовний напій за кожні 340 зірок длинный текст длинный
-                текст длинный текст длинный текст
-              </Text>
-              <Text style={styles.levelListItem}>
-                Безкоштовний напій за кожні 340 зірок
+                Ви будете отримувати 1% кешбеку у вигляді зірок
               </Text>
             </View>
-
             <View style={styles.levelOrange}>
               <Text style={styles.levelWhiteTitle}>ORANGE LEVEL</Text>
             </View>
-
             <View style={styles.whiteBg}>
-              <Text style={styles.levelTitle}>0-499 зірок/місяц</Text>
-
+              <Text style={styles.levelTitle}>При витратах 200-399 грн/місяц</Text>
               <Text style={styles.levelListItem}>
-                Безкоштовний напій за кожні 340 зірок
-              </Text>
-              <Text style={styles.levelListItem}>
-                Безкоштовний напій за кожні 340 зірок
-              </Text>
-              <Text style={styles.levelListItem}>
-                Безкоштовний напій за кожні 340 зірок
+                Ви будете отримувати 2% кешбеку у вигляді зірок
               </Text>
             </View>
-
+            <View style={styles.levelRed}>
+              <Text style={styles.levelWhiteTitle}>RED LEVEL</Text>
+            </View>
             <View style={styles.whiteBg}>
-              <Text style={styles.levelTitle}>0-499 зірок/місяц</Text>
-
+              <Text style={styles.levelTitle}>При витратах вiд 399 грн/місяц</Text>
               <Text style={styles.levelListItem}>
-                Безкоштовний напій за кожні 340 зірок
-              </Text>
-              <Text style={styles.levelListItem}>
-                Безкоштовний напій за кожні 340 зірок
-              </Text>
-              <Text style={styles.levelListItem}>
-                Безкоштовний напій за кожні 340 зірок
+                Ви будете отримувати 3% кешбеку у вигляді зірок
               </Text>
             </View>
-
             <View style={styles.whiteBg}>
-              <Text style={styles.levelTitle}>0-499 зірок/місяц</Text>
-
               <Text style={styles.levelListItem}>
-                Безкоштовний напій за кожні 340 зірок
-              </Text>
-              <Text style={styles.levelListItem}>
-                Безкоштовний напій за кожні 340 зірок
-              </Text>
-              <Text style={styles.levelListItem}>
-                Безкоштовний напій за кожні 340 зірок
+                Також на вас чекають спеціальниi пропозиції в день вашого народження
               </Text>
             </View>
           </View>
-        
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>
@@ -211,6 +168,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     elevation: 5,
   },
+  levelRed: {
+    backgroundColor: "red",
+    width: 160,
+    borderRadius: 10,
+    height: 35,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+    elevation: 5,
+  },
   levelWhiteTitle: {
     color: "#fff",
     fontWeight: "bold",
@@ -232,6 +199,7 @@ const styles = StyleSheet.create({
   },
 
   bonusDescBlock: {
+    width: '100%',
     marginBottom: 30,
     borderRadius: 15,
     backgroundColor: "#fff",
@@ -248,10 +216,14 @@ const styles = StyleSheet.create({
   },
   bonusTextRow: {},
   bonusDescText: {
-    fontSize: 16,
+    fontSize: 21,
     fontWeight: "bold",
   },
-  bonusDescGreen: {},
+  bonusDescTextSmall: {
+    flex: 1,
+    width: 270,
+    fontSize: 14,
+    flexWrap: 'wrap'
 
-  bonusDescIcon: {},
+  },
 });

@@ -35,10 +35,11 @@ import EditProfileScreen from "./screens/EditProfileScreen";
 import DiscountDescription from "./screens/DiscountDescription";
 
 
-import { connect } from 'react-redux';
+
 // import {Provider, connect} from 'react-redux';
 // import {store} from './redux/store/createStore';
-import { restoreToken, signIn, signOut } from './redux/actions/authActions';
+import { connect } from 'react-redux';
+import { restoreToken } from './redux/actions/authActions';
 
 
 import {
@@ -58,18 +59,7 @@ const App = (props) => {
   //console.log('fireBaseToken', props.reducerData.fireBaseToken)
 
 
-  const CustomDefaultTheme = {
-    ...NavigationDefaultTheme,
-    ...PaperDefaultTheme,
-    colors: {
-      ...NavigationDefaultTheme.colors,
-      ...PaperDefaultTheme.colors,
-      background: "#ffffff",
-      text: "#333333",
-    },
-  };
 
-  const theme = CustomDefaultTheme;
 
   const [iikoToken, setIikoToken] = useState(null);
 
@@ -87,10 +77,7 @@ const App = (props) => {
 
       } catch (e) { }
 
-
-      //console.log("getPhoneAndFRBTokenIfExist TOKEN", fireBaseToken)
-
-      props.restoreToken(fireBaseToken) // dispatch
+        props.restoreToken(fireBaseToken) // dispatch
 
       return phoneNumber;
     };
@@ -98,101 +85,11 @@ const App = (props) => {
 
     getPhoneAndFRBTokenIfExist()
 
-    // getPhoneAndFRBTokenIfExist().then((phoneNumber) => {
-
-    //   if (iikoToken == null) {
-    //     getIikoAuthToken() // тут точно не устарел
-    //       .then((token) => {
-
-    //         return getIikoUserInfoByPhone(phoneNumber, token);
-    //       })
-    //       .then((userInfo) => {
-    //         //setUserData(userData)
-
-    //         //console.log("userData77", userInfo);
-
-            
-    //       });
-    //   } else {
-    //     checkIfIikoTokenIsValid(iikoToken);
-    //   }
-    // });
-
-
-
-
   }, []);
 
-  const getIikoAuthToken = () => {
-    return fetch(
-      "https://card.iiko.co.uk/api/0/auth/access_token?user_id=" +
-      IIKO_LOGIN +
-      "&user_secret=" +
-      IIKO_PASS,
-      {
-        method: "GET",
-      }
-    )
-      .then((response) => response.json())
-      .then((responseJson) => {
-        //console.log("getIikoAuthToken", responseJson);
-        //setIikoToken(responseJson)
-        return responseJson;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
-  const getIikoUserInfoByPhone = (phone, token) => {
-    return fetch(
-      "https://card.iiko.co.uk/api/0/customers/get_customer_by_phone?access_token=" +
-      token +
-      "&organization=" +
-      IIKO_ORGANIZATION_ID +
-      "&phone=" +
-      phone,
-      {
-        method: "GET",
-      }
-    )
-      .then((response) => response.json())
-      .then((responseJson) => {
-        //console.log("UserInfoByPhone", responseJson);
 
-        return responseJson;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
 
-  };
-
-  const addIikoUserByPhone = () => { };
-
-  const checkIfIikoTokenIsValid = (iikoToken) => {
-    return fetch(
-      "https://card.iiko.co.uk/api/0/customers/get_customer_by_phone?access_token=" +
-      iikoToken,
-      {
-        method: "GET",
-      }
-    )
-      .then((response) => response.json())
-      .then((responseJson) => {
-        //setIikoResponseCode(responseJson.code)
-        console.log("checkIfIikoTokenIsValid");
-
-        if (responseJson.code == 201) {
-          return false;
-        } else {
-          return true;
-        }
-      })
-      .catch((err) => {
-        //console.log(err);
-      });
-  };
 
 
 
@@ -214,7 +111,7 @@ const App = (props) => {
   return (
 
 
-    <NavigationContainer theme={theme}>
+    <NavigationContainer >
       { console.log('APP fireBaseToken', props.reducerData.fireBaseToken)}
       <StatusBar hidden />
       {(props.reducerData.fireBaseToken == null) || (props.reducerData.fireBaseToken == 'undefined') ? (
