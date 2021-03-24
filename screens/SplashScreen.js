@@ -15,51 +15,48 @@ import { useTheme } from '@react-navigation/native';
 import LOGO from '../assets/svg/logo.svg';
 import bgImage from "../assets/pattern2.jpg";
 
+import AsyncStorage from "@react-native-community/async-storage";
+
+
 const SplashScreen = ({ navigation }) => {
+
     const { colors } = useTheme();
 
     return (
-        
-            <ImageBackground source={bgImage} resizeMode='repeat' style={styles.bgImage}>
-
-
-                <Animatable.View
-                    style={styles.header}
-                    animation="bounceIn"
-                    duraton="3500"
-                >
-                    <LOGO width="290" height="100" />
-                </Animatable.View>
-
-                <Animatable.View
-                    style={[styles.footer, {
-                        backgroundColor: colors.background
-                    }]}
-                    animation="fadeInUpBig"
-                >
-                    <Text style={[styles.title, {
-                        color: colors.text
-                    }]}>Накапливай баллы, получай скидуи!</Text>
-                    <Text style={styles.text}>Desc of discount app</Text>
-                    <View style={styles.button}>
-                        <TouchableOpacity onPress={() => navigation.navigate('SignInScreen')}>
-                            <LinearGradient
-                                colors={['#cd002a', '#cd0000']}
-                                style={styles.signIn}
-                            >
-                                <Text style={styles.textSign}>Начать</Text>
-                                <MaterialIcons
-                                    name="navigate-next"
-                                    color="#fff"
-                                    size={20}
-                                />
-                            </LinearGradient>
-                        </TouchableOpacity>
-                    </View>
-                </Animatable.View>
-            
-            </ImageBackground>
-        
+        <ImageBackground source={bgImage} resizeMode='repeat' style={styles.bgImage}>
+            <Animatable.View
+                style={styles.header}
+                animation="bounceIn"
+                duraton="3500"
+            >
+                <LOGO width="280" height="100" />
+            </Animatable.View>
+            <Animatable.View
+                style={[styles.footer, {
+                    backgroundColor: colors.background
+                }]}
+                animation="fadeInUpBig"
+            >
+                <Text style={[styles.title, {
+                    color: colors.text
+                }]}>Накоплюй бали, отримуй знижки!</Text>
+                <View style={styles.button}>
+                    <TouchableOpacity onPress={() => navigation.navigate('SignInScreen')}>
+                        <LinearGradient
+                            colors={['#cd002a', '#cd0000']}
+                            style={styles.signIn}
+                        >
+                            <Text style={styles.textSign}>ПОЧАТИ</Text>
+                            <MaterialIcons
+                                name="navigate-next"
+                                color="#fff"
+                                size={20}
+                            />
+                        </LinearGradient>
+                    </TouchableOpacity>
+                </View>
+            </Animatable.View>
+        </ImageBackground>
     );
 };
 
@@ -95,6 +92,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.8,
         shadowRadius: 2,
         elevation: 5,
+        alignItems: 'center'
     },
     logo: {
         width: height_logo,
@@ -103,11 +101,8 @@ const styles = StyleSheet.create({
     title: {
         color: '#05375a',
         fontSize: 30,
-        fontWeight: 'bold'
-    },
-    text: {
-        color: 'grey',
-        marginTop: 5
+        fontWeight: 'bold',
+        textAlign: 'center'
     },
     button: {
         alignItems: 'flex-end',

@@ -1,4 +1,3 @@
-
 const initialState = {
     pending: false,
     iikoUserData: [],
@@ -16,7 +15,6 @@ export const  userDataReducer = (state = initialState, action) => {
             }
         case "FETCH_IIKOUSERDATA_SUCCESS":
           console.log("FETCH_IIKOUSERDATA_SUCCESS")
-          console.log("FETCH_IIKOUSERDATA_SUCCESS", action.iikoUserData.walletBalances[0].balance)
             return {
                 ...state,
                 pending: false,

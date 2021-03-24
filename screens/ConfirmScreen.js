@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -12,12 +12,7 @@ import {
 import * as Animatable from "react-native-animatable";
 import LinearGradient from "react-native-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-
-import { useTheme } from "react-native-paper";
-
-import auth from "@react-native-firebase/auth";
 import AsyncStorage from "@react-native-community/async-storage";
-
 import bgImage from "../assets/pattern2.jpg";
 import LOGO from "../assets/svg/logo.svg";
 
@@ -36,7 +31,6 @@ import styles, {
   NOT_EMPTY_CELL_BG_COLOR,
 } from "../styles/confirmStyles";
 
-import { AuthContext } from '../components/context';
 import { connect } from 'react-redux';
 import { signIn } from './../redux/actions/authActions';
 
@@ -164,11 +158,11 @@ const ConfirmScreen = (props) => {
               animation="bounceIn"
               duraton="3500"
             >
-              <LOGO width="290" height="100" />
+              <LOGO width="280" height="100" />
             </Animatable.View>
 
             <Animatable.View style={styles.footer} animation="fadeInUpBig">
-              <Text style={styles.title}>Введите код с СМС</Text>
+              <Text style={styles.title}>Ведіть код з СМС</Text>
 
               <CodeField
                 ref={ref}
@@ -192,7 +186,7 @@ const ConfirmScreen = (props) => {
                     colors={disableBtn ? ["#ccc", "#ccc"] : ["#cd002a", "#cd0000"]}
                     style={styles.signIn}
                   >
-                    <Text style={styles.textSign}>Отправить</Text>
+                    <Text style={styles.textSign}>НАДІСЛАТИ</Text>
                     <MaterialIcons name="navigate-next" color="#fff" size={20} />
                   </LinearGradient>
                 </TouchableOpacity>

@@ -24,9 +24,6 @@ const DiscountBigScreen = (props) => {
   let phone = props.userDataReducer.iikoUserData.phone
   let balance = props.userDataReducer.iikoUserData.walletBalances[0].balance
 
-
-
-
   const generateCardNumber = (phoneNumber) => {
     let phone = phoneNumber; // 10
     phone = phone.split('+38').join('');
@@ -36,15 +33,8 @@ const DiscountBigScreen = (props) => {
     }
     let cardNumber = arr[0] + arr[3] + arr[1] + arr[8] + arr[9] + arr[2] + arr[4] + arr[7] + arr[6] + arr[5]
 
-    //console.log("arr", cardNumber)
     return cardNumber
   }
-
-
-
-
-
-
 
   return (
     <>
@@ -78,46 +68,39 @@ const DiscountBigScreen = (props) => {
                 lineColor="#000"
                 width="3"
               />
+              <View style={styles.bonusWrapperBonus}>
+                <Text>На вашому рахунку</Text>
+                <Text style={styles.bounusWrapperValue}>{balance}</Text>
+                <Animatable.View
+                  animation="pulse"
+                  easing="ease-out"
+                  iterationCount="infinite"
+                >
+                  <STAR width={27} height={27} />
+                </Animatable.View>
+              </View>
             </View>
           </View>
+
           <View style={styles.bonusWrapper}>
-            
-            <View style={styles.bonusWrapperRow}>
-              <Text style={styles.bonusWrapperTitle}>на вашеи счету</Text>
-              <Text style={styles.bounusWrapperValue}>{balance}</Text>
-              <Animatable.View
-                animation="pulse"
-                easing="ease-out"
-                iterationCount="infinite"
-              >
-                <STAR width={27} height={27} />
-              </Animatable.View>
-            </View>  
-
-
-            <TouchableOpacity 
-            style={styles.bonusWrapperRow}
-            onPress={() =>
-              props.navigation.navigate(
-                "DiscountDescription",
-                props.navigation
-              )
-            }
+            <TouchableOpacity
+              style={styles.bonusWrapperButton}
+              onPress={() =>
+                props.navigation.navigate(
+                  "DiscountDescription",
+                  props.navigation
+                )
+              }
             >
-              <Text style={styles.bonusWrapperTitle}>Як нараховуються бали</Text>  
-          
+              <Text style={styles.bonusWrapperTitle}>Як нараховуються бали?</Text>
               <INFO />
             </TouchableOpacity>
-
           </View>
         </ImageBackground>
       </SafeAreaView>
     </>
   );
 };
-
-//export default DiscountBigScreen;
-
 
 const mapStateToProps = state => {
   return {
@@ -141,39 +124,57 @@ const styles = StyleSheet.create({
   },
   bonusWrapper: {
     position: 'absolute',
-    flexDirection: 'column',
     width: '100%',
-    bottom: 0,
+    bottom: 20,
     alignItems: "center",
     justifyContent: 'center',
-    backgroundColor: "#fff",
-    height: 90,
-    justifyContent: "center",
-    padding: 20,
-    borderRadius: 10,
-    shadowColor: "#999",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 35,
-
   },
   bonusWrapperRow: {
     width: '100%',
     height: 45,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 35,
+    backgroundColor: '#fff',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
-
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    marginVertical: 10,
+    paddingHorizontal: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  bonusWrapperTitle: {},
+  bonusWrapperButton: {
+    flexDirection: 'row',
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 35,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    marginVertical: 10,
+    paddingHorizontal: 15
+  },
+  bonusWrapperTitle: {
+    marginRight: 15,
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
   bounusWrapperValue: {
-    marginHorizontal: 20
+    marginHorizontal: 10
   },
   barcodeWrapper: {
     alignItems: "center",
     backgroundColor: "#fff",
     height: 200,
+    paddingHorizontal: 30,
     justifyContent: "center",
     padding: 20,
     borderRadius: 10,
@@ -182,5 +183,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
+    marginTop: -20
+  },
+  bonusWrapperBonus: {
+    marginTop: 10,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    flexDirection: 'row'
   },
 });

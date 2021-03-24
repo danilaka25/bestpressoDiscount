@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
-  ActivityIndicator,
   ScrollView,
   ImageBackground,
   View,
@@ -31,10 +30,10 @@ import NEWS from "../assets/svg/newspaper.svg";
 import CUP_Active from "../assets/svg/coffee-cup-active.svg";
 import NEWS_Active from "../assets/svg/newspaper-active.svg";
 
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {fetchIikoPending, fetchIikoSuccess, fetchIikoError} from './../redux/actions/userDataActions';
-import {fetchUserData} from './../redux/actions/fetchUserData';
+import { fetchIikoPending, fetchIikoSuccess, fetchIikoError } from './../redux/actions/userDataActions';
+import { fetchUserData } from './../redux/actions/fetchUserData';
 
 import {
   IIKO_LOGIN,
@@ -43,12 +42,23 @@ import {
 } from "react-native-dotenv";
 
 
-const { width: screenWidth } = Dimensions.get('window')
-
+const windowHeight = Dimensions.get('window').height;
+let smallScreen = false
+if (windowHeight <= 550) {
+  smallScreen = true
+}
 
 const HomeScreen = (props) => {
-  
-  
+
+
+  console.log("HomeScreen pending" , fetchIikoSuccess())
+
+  //const isFetchingIiko = props.userDataReducer.pending
+
+  const productCarousel = useRef();
+  const newsCarousel = useRef();
+
+
 
   console.log("props", props.updateUserData)
 
@@ -65,7 +75,6 @@ const HomeScreen = (props) => {
   const [products, setProducts] = useState([]);
   const [places, setPlaces] = useState([]);
   const [initalRegion, setInitalRegion] = useState([]);
-  
   const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -75,7 +84,7 @@ const HomeScreen = (props) => {
     let length = 62
     let tempTitle = title.substr(0, length)
     let tempDots = ' ... '
-    
+
     if (title.length >= length) {
       return tempTitle + tempDots
     } else {
@@ -87,7 +96,7 @@ const HomeScreen = (props) => {
   const _renderNews = ({ item }) => {
     return (
       <TouchableOpacity
-        style={{marginLeft: 25, marginRight: 25}}
+        style={{ marginLeft: 25, marginRight: 25 }}
         activeOpacity={1}
         itemData={item}
         onPress={() =>
@@ -95,10 +104,8 @@ const HomeScreen = (props) => {
         }
       >
         <View style={styles.NewsItemBlock}>
-          
-          <Image style={styles.NewsItemImage} source={{ uri: item.img }} /> 
+          <Image style={styles.NewsItemImage} source={{ uri: item.img }} />
           <Text style={styles.NewsItemTitle}>{substrNewsTitle(item.title)}</Text>
-            
         </View>
       </TouchableOpacity>
     );
@@ -107,7 +114,7 @@ const HomeScreen = (props) => {
   const _renderProducts = ({ item }) => {
     return (
       <TouchableOpacity
-        style={{marginLeft: 25}}
+        style={{ marginLeft: 25 }}
         activeOpacity={1}
         itemData={item}
         onPress={() =>
@@ -122,7 +129,7 @@ const HomeScreen = (props) => {
           <View style={{ height: 20 }}></View>
           <View style={styles.ProductItemWrapper}>
             <Image style={styles.ProductItemImage} source={{ uri: item.img }} />
-            <Text style={styles.ProductItemTitle}>{item.title}</Text>
+            <View style={styles.ProductItemTitleBlock}><Text style={styles.ProductItemTitle}>{item.title}</Text></View>
             <Text style={styles.ProductItemPrice}>
               {item.variations[0].price} ₴
             </Text>
@@ -145,19 +152,15 @@ const HomeScreen = (props) => {
         for (var key in snapshot.val().news) {
           tempNews.push(snapshot.val().news[key]);
         }
-
         for (var key in snapshot.val().products) {
           tempProducts.push(snapshot.val().products[key]);
         }
-
         for (var key in snapshot.val().places) {
           tempPlaces.push(snapshot.val().places[key]);
         }
-
         for (var key in snapshot.val().initalRegion) {
           tempInitalRegion.push(snapshot.val().initalRegion[key]);
         }
-
         setNews(tempNews);
         setProducts(tempProducts);
         setPlaces(tempPlaces);
@@ -167,25 +170,25 @@ const HomeScreen = (props) => {
 
   useEffect(() => {
     (async () => {
-      //await console.log("firebase start");
       await getAllDataFromFirebaseDb();
       await setLoading(false);
-      //await console.log("firebase loaded");
     })();
 
     getPhoneAndIikoToken().then((data) => {
-      
-      
+
+
       //getIikoUserInfoByPhone(data[0], data[1]);
       props.fetchUserData()
+
+
 
       console.log("userDataReducer((((", props.userDataReducer.iikoUserData.walletBalances[0].balance)
 
 
-      setBalance(props.userDataReducer.iikoUserData.walletBalances[0].balance)
+      //setBalance(props.userDataReducer.iikoUserData.walletBalances[0].balance)
       // setTimeout(() => 
       // getIikoUserInfoByPhone(data[0], data[1])
-      
+
       // , 6000);
 
     });
@@ -212,16 +215,16 @@ const HomeScreen = (props) => {
     console.log("post user START");
     fetch(
       "https://card.iiko.co.uk/api/0/customers/create_or_update?access_token=" +
-        token +
-        "&organization=" +
-        IIKO_ORGANIZATION_ID,
+      token +
+      "&organization=" +
+      IIKO_ORGANIZATION_ID,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          customer: { phone: phone,  magnetCardTrack: generateCardNumber(phone)},
+          customer: { phone: phone, magnetCardTrack: generateCardNumber(phone) },
         }),
       }
     )
@@ -250,9 +253,9 @@ const HomeScreen = (props) => {
   const getIikoAuthToken = () => {
     return fetch(
       "https://card.iiko.co.uk/api/0/auth/access_token?user_id=" +
-        IIKO_LOGIN +
-        "&user_secret=" +
-        IIKO_PASS,
+      IIKO_LOGIN +
+      "&user_secret=" +
+      IIKO_PASS,
       {
         method: "GET",
       }
@@ -261,17 +264,17 @@ const HomeScreen = (props) => {
       .then((iikoToken) => {
         return iikoToken;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   const getIikoUserInfoByPhone = (phone, token) => {
     return fetch(
       "https://card.iiko.co.uk/api/0/customers/get_customer_by_phone?access_token=" +
-        token +
-        "&organization=" +
-        IIKO_ORGANIZATION_ID +
-        "&phone=" +
-        phone,
+      token +
+      "&organization=" +
+      IIKO_ORGANIZATION_ID +
+      "&phone=" +
+      phone,
       {
         method: "GET",
       }
@@ -296,20 +299,20 @@ const HomeScreen = (props) => {
           //setBalance(0);
 
         } else {
-           // set balance
-           console.log("set balance");
+          // set balance
+          console.log("set balance");
           //setBalance(userData.walletBalances[0].balance);
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  }; 
+  };
 
   const checkIfIikoTokenIsValid = (iikoToken) => {
     return fetch(
       "https://card.iiko.co.uk/api/0/customers/get_customer_by_phone?access_token=" +
-        iikoToken,
+      iikoToken,
       {
         method: "GET",
       }
@@ -342,75 +345,77 @@ const HomeScreen = (props) => {
         {activeTab ? (
           <View style={styles.SliderWrapper}>
             <Carousel
+              ref={newsCarousel}
               layout={"default"}
-              loop={false}
-              //enableSnap={true}
-              // activeSlideAlignment={"start"}
-              // inactiveSlideScale={1}
-              // inactiveSlideOpacity={1}
+              loop={true}
+              enableSnap={true}
+              activeSlideAlignment={"start"}
+              inactiveSlideScale={1}
+              inactiveSlideOpacity={1}
               data={news}
-              sliderWidth={250}
+              sliderWidth={210}
               itemWidth={280}
               renderItem={_renderNews}
               onSnapToItem={(index) => setNewsActiveIndex(index)}
-             
             />
+
           </View>
         ) : (
-          <View style={styles.SliderWrapper}>
-            <Carousel
-              layout={"default"}
-              loop={false}
-              //enableSnap={true}
-              //activeSlideAlignment={"start"}
-              // inactiveSlideScale={1}
-              // inactiveSlideOpacity={1}
-              data={products}
-              sliderWidth={150}
-              itemWidth={160}
-              renderItem={_renderProducts}
-              onSnapToItem={(index) => setActiveProductIndex(index)}
-            />
-          </View>
-        )}
+            <View style={styles.SliderWrapper}>
+              <Carousel
+                ref={productCarousel}
+                layout={"default"}
+                loop={false}
+                //enableSnap={true}
+                activeSlideAlignment={"start"}
+                inactiveSlideScale={1}
+                inactiveSlideOpacity={1}
+                data={products}
+                sliderWidth={150}
+                itemWidth={160}
+                renderItem={_renderProducts}
+                onSnapToItem={(index) => setActiveProductIndex(index)}
+              />
+            </View>
+          )}
       </>
     );
   };
 
   return (
-    <View style={styles.container}> 
+    <View style={styles.container}>
       <ImageBackground
         source={bgImage}
         resizeMode="repeat"
         style={styles.bgImage}
       >
         <View style={styles.logoContainer}>
-          <Header navigation={props.navigation} showBack={false} showReload={false} showInfo={true}/>
+          <Header navigation={props.navigation} showBack={false} showReload={true} showInfo={false} />
         </View>
         <View style={styles.barcodeContainer}>
           <View style={styles.barcodeInner}>
             <TouchableOpacity
-              onPress={() => props.navigation.navigate("DiscountBigScreen", {balance: balance, phone: phone}, props.navigation)}
+              onPress={() => props.navigation.navigate("DiscountBigScreen", props.navigation)}
             >
               <View>
                 {phone == null ? (
                   <Text>No bonus</Text>
                 ) : (
-                  <Barcode
-                    value={generateCardNumber(phone)}
-                    format="CODE128"
-                    background="#fff"
-                    lineColor="#000"
+                    <Barcode
+                      value={generateCardNumber(phone)}
+                      format="CODE128"
+                      background="#fff"
+                      lineColor="#000"
                     // width="3"
-                  />
-                )}
+                    />
+                  )}
               </View>
             </TouchableOpacity>
             <View style={styles.barcodeDescRow}>
               <Text style={styles.barcodeDesc}>На Вашому рахунку:</Text>
               <View style={styles.barcodePointsContainer}>
                 <STAR width={27} height={27} />
-                <Text style={styles.barcodePointsValue}>{balance}</Text>
+                {/* {props.userDataReducer.pending ? <Text>Loading</Text> : <Text style={styles.barcodePointsValue}>{props.userDataReducer.iikoUserData.walletBalances[0].balance}</Text>} */}
                 <Text style={styles.barcodePointsText}>Балів</Text>
               </View>
             </View>
@@ -427,14 +432,18 @@ const HomeScreen = (props) => {
             onPress={() => changeTab(0)}
           >
             {activeTab == 1 ? <CUP width="40" height="40" /> : <CUP_Active />}
-            <Text
+
+
+
+            {smallScreen ? <></> : <Text
               style={[
                 styles.toggleBtnTxt,
                 { color: activeTab == 0 ? "#6AAE36" : "#000" },
               ]}
             >
               Меню
-            </Text>
+            </Text>}
+
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -446,44 +455,49 @@ const HomeScreen = (props) => {
             onPress={() => changeTab(1)}
           >
             {activeTab == 1 ? <NEWS_Active /> : <NEWS />}
-            <Text
+          
+
+
+            {smallScreen ? <></> : <Text
               style={[
                 styles.toggleBtnTxt,
                 { color: activeTab == 0 ? "#6AAE36" : "#000" },
               ]}
             >
               Новости
-            </Text>
+            </Text>}
+
+
           </TouchableOpacity>
         </View>
 
         {!loading ? (
           renderSlider(activeTab)
         ) : (
-          <ScrollView horizontal={true} style={styles.preloadProductsRow}>
-            <SvgAnimatedLinearGradient
-              width={140}
-              height={160}
-              style={styles.preloadProductItem}
-            >
-              <Rect x="0" y="0" rx="5" ry="0" width="140" height="160" />
-            </SvgAnimatedLinearGradient>
-            <SvgAnimatedLinearGradient
-              width={140}
-              height={160}
-              style={styles.preloadProductItem}
-            >
-              <Rect x="0" y="0" rx="5" ry="0" width="140" height="160" />
-            </SvgAnimatedLinearGradient>
-            <SvgAnimatedLinearGradient
-              width={140}
-              height={160}
-              style={styles.preloadProductItem}
-            >
-              <Rect x="0" y="0" rx="5" ry="0" width="140" height="160" />
-            </SvgAnimatedLinearGradient>
-          </ScrollView>
-        )}
+            <ScrollView horizontal={true} style={styles.preloadProductsRow}>
+              <SvgAnimatedLinearGradient
+                width={140}
+                height={160}
+                style={styles.preloadProductItem}
+              >
+                <Rect x="0" y="0" rx="5" ry="0" width="140" height="160" />
+              </SvgAnimatedLinearGradient>
+              <SvgAnimatedLinearGradient
+                width={140}
+                height={160}
+                style={styles.preloadProductItem}
+              >
+                <Rect x="0" y="0" rx="5" ry="0" width="140" height="160" />
+              </SvgAnimatedLinearGradient>
+              <SvgAnimatedLinearGradient
+                width={140}
+                height={160}
+                style={styles.preloadProductItem}
+              >
+                <Rect x="0" y="0" rx="5" ry="0" width="140" height="160" />
+              </SvgAnimatedLinearGradient>
+            </ScrollView>
+          )}
 
         <View style={styles.categoryContainer}>
           <TouchableOpacity
@@ -507,15 +521,19 @@ const HomeScreen = (props) => {
             <Text style={styles.categoryBtnTxt}>Edit</Text>
           </TouchableOpacity>
 
+
+
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() => props.navigation.navigate("DiscountDescription")}
           >
             <View style={styles.categoryIcon}>
-              <MAP width={26} height={26} />
+              <MENU width={26} height={26} />
             </View>
-            <Text style={styles.categoryBtnTxt}>Заклади</Text>
+            <Text style={styles.categoryBtnTxt}>Меню</Text>
           </TouchableOpacity>
+
+
 
           <TouchableOpacity
             style={styles.categoryBtn}
@@ -528,13 +546,13 @@ const HomeScreen = (props) => {
             }
           >
             <View style={styles.categoryIcon}>
-              <MENU width={26} height={26} />
+              <MAP width={26} height={26} />
             </View>
-            <Text style={styles.categoryBtnTxt}>Меню</Text>
+            <Text style={styles.categoryBtnTxt}>Заклади</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
-    </View>
+    </View >
   );
 };
 
@@ -552,7 +570,7 @@ const mapStateToProps = state => {
 
 function mapDispatchToProps(dispatch) {
   return {
-      ...bindActionCreators({ fetchUserData }, dispatch)
+    ...bindActionCreators({ fetchUserData }, dispatch)
   }
 }
 
@@ -696,9 +714,8 @@ const styles = StyleSheet.create({
     flex: 2,
     flexDirection: "row",
     justifyContent: "center",
-    width: "95%",
+    //width: "95%",
     alignSelf: "flex-end",
-    //position: 'absolute'
   },
   NewsItemBlock: {
     flexDirection: 'row',
@@ -779,9 +796,15 @@ const styles = StyleSheet.create({
     marginTop: -20,
     zIndex: 10,
   },
-  ProductItemTitle: {
+  ProductItemTitleBlock: {
     width: 118,
     height: 55,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  ProductItemTitle: {
+    textAlign: 'center'
   },
   ProductItemPrice: {
     position: "absolute",

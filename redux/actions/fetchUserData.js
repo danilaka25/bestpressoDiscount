@@ -23,11 +23,12 @@ const generateCardNumber = (phoneNumber) => {
     return cardNumber
 }
 
-
+var phoneNumber;
+var iikoToken;
 
 
 const getIikoAuthToken = async () => {
-    let phoneNumber = await AsyncStorage.getItem("phoneNumber");
+    phoneNumber = await AsyncStorage.getItem("phoneNumber");
     return fetch(
       "https://card.iiko.co.uk/api/0/auth/access_token?user_id=" +
         IIKO_LOGIN +
@@ -37,13 +38,38 @@ const getIikoAuthToken = async () => {
         method: "GET",
       }
     )
-      .then((response) => response.json())
-      .then((iikoToken) => {
-          
-        return [phoneNumber, iikoToken];
-      })
-      .catch((err) => {});
-  };
+    .then((response) => response.json())
+    .then((token) => {
+      iikoToken = token
+    })
+    .catch((err) => {});
+}
+
+const addIikoUserByPhone = (phone, token) => {
+  console.log("post user START");
+  fetch(
+    "https://card.iiko.co.uk/api/0/customers/create_or_update?access_token=" +
+    token +
+    "&organization=" +
+    IIKO_ORGANIZATION_ID,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        customer: { phone: phone, magnetCardTrack: generateCardNumber(phone) },
+      }),
+    }
+  )
+    .then((response) => response.json())
+    .then((response) => {
+      console.log("post user", response);
+    })
+    .catch((err) => {
+      console.log("error", err);
+    });
+};
 
 export const fetchUserData = () => {
     return dispatch => {
@@ -51,15 +77,15 @@ export const fetchUserData = () => {
       console.log("dispatch START")  
       dispatch(fetchIikoPending());
 
-      getIikoAuthToken().then((data) => {
-          console.log("iikoToken 9090", data)
+      getIikoAuthToken().then(() => {
+          //console.log("iikoToken 9090", data)
           return fetch(
               "https://card.iiko.co.uk/api/0/customers/get_customer_by_phone?access_token=" +
-              data[1] +
+              iikoToken+
               "&organization=" +
               IIKO_ORGANIZATION_ID +
               "&phone=" +
-              data[0],
+              phoneNumber,
               {
                   method: "GET",
               }
@@ -67,12 +93,40 @@ export const fetchUserData = () => {
           .then((response) => response.json())
           .then((userData) => {
   
-              console.log("dispatch END")
+              console.log("dispatch END", userData)
+
+
+              if (userData.httpStatusCode == 400 && userData.code == null) {
+
+                  console.log("no user")
+                  addIikoUserByPhone(phoneNumber, iikoToken).then(()=> {
+
+                    return fetch(
+                      "https://card.iiko.co.uk/api/0/customers/get_customer_by_phone?access_token=" +
+                      iikoToken+
+                      "&organization=" +
+                      IIKO_ORGANIZATION_ID +
+                      "&phone=" +
+                      phoneNumber,
+                      {
+                          method: "GET",
+                      }
+                  )
+                  .then((response) => response.json())
+                  .then((userData) => {
+                    return dispatch(fetchIikoSuccess(userData));
+                  })
+                    
+                  })
+
+              }
+
               return dispatch(fetchIikoSuccess(userData));
   
           })
           .catch((error) => {
-              dispatch(fetchIikoError(error));
+            console.log("ERROR in fetchUserData", error)
+            return dispatch(fetchIikoError(error));
           });
 
       })

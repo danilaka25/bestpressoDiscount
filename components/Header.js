@@ -44,7 +44,7 @@ const Header = (props, { navigation }) => {
   const displayInfo = () => {
     if (props.showInfo) {
       return (
-        <TouchableOpacity style={styles.reload} 
+        <TouchableOpacity style={styles.info} 
         onPress={() =>
           props.navigation.navigate(
             "DiscountDescription",
@@ -63,7 +63,7 @@ const Header = (props, { navigation }) => {
   return (
     <View style={styles.header}>
       {displayBack()}
-      <LOGO width="200" height="80" style={styles.logo} />
+      <LOGO width="170" height="80" style={styles.logo} />
       {displayReload()}
       {displayInfo()}
     </View>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   back: {
     position: "absolute",
-    left: 20,
+    left: 15,
     backgroundColor: "#fff",
     padding: 15,
     borderRadius: 10,
@@ -106,6 +106,18 @@ const styles = StyleSheet.create({
   },
   reload: {
     position: "absolute",
-    right: 25,
+    right: 15,
   },
+  info: {
+    position: "absolute",
+    right: 15,
+    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    shadowColor: "#999",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+  }
 });

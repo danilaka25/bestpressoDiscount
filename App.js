@@ -7,20 +7,9 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { View, ActivityIndicator, StatusBar } from "react-native";
-import {
-  NavigationContainer,
-  DefaultTheme as NavigationDefaultTheme,
-  DarkTheme as NavigationDarkTheme,
-} from "@react-navigation/native";
-
+import { View, ActivityIndicator, StatusBar , Dimensions} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-
-import {
-  // Provider as PaperProvider,
-  DefaultTheme as PaperDefaultTheme,
-  DarkTheme as PaperDarkTheme,
-} from "react-native-paper";
 
 import HomeScreen from "./screens/HomeScreen";
 import ExploreScreen from "./screens/ExploreScreen";
@@ -34,64 +23,39 @@ import SettingsScreen from "./screens/SettingsScreen";
 import EditProfileScreen from "./screens/EditProfileScreen";
 import DiscountDescription from "./screens/DiscountDescription";
 
-
-
-// import {Provider, connect} from 'react-redux';
-// import {store} from './redux/store/createStore';
 import { connect } from 'react-redux';
 import { restoreToken } from './redux/actions/authActions';
-
-
-import {
-  IIKO_LOGIN,
-  IIKO_PASS,
-  IIKO_ORGANIZATION_ID,
-} from "react-native-dotenv"; // added
-
 import AsyncStorage from "@react-native-community/async-storage";
 
 const MainStack = createStackNavigator();
 const InitalStack = createStackNavigator();
 
+const windowHeight = Dimensions.get('window').height;
+let smallScreen = false
+if (windowHeight <= 550) {
+  smallScreen = true
+}
+
 const App = (props) => {
-
-
-  //console.log('fireBaseToken', props.reducerData.fireBaseToken)
-
-
-
-
-  const [iikoToken, setIikoToken] = useState(null);
 
   useEffect(() => {
 
     const getPhoneAndFRBTokenIfExist = async () => {
-
       let fireBaseToken;
       let phoneNumber;
 
       try {
-
         fireBaseToken = await AsyncStorage.getItem("fireBaseToken");
         phoneNumber = await AsyncStorage.getItem("phoneNumber");
+      } catch (e) {
 
-      } catch (e) { }
-
-        props.restoreToken(fireBaseToken) // dispatch
-
-      return phoneNumber;
-    };
-
+      }
+      props.restoreToken(fireBaseToken) // dispatch
+    }
 
     getPhoneAndFRBTokenIfExist()
 
   }, []);
-
-
-
-
-
-
 
   if (props.reducerData.isLoading) {
     return (
@@ -109,13 +73,10 @@ const App = (props) => {
   }
 
   return (
-
-
-    <NavigationContainer >
-      { console.log('APP fireBaseToken', props.reducerData.fireBaseToken)}
+    <NavigationContainer  >
       <StatusBar hidden />
       {(props.reducerData.fireBaseToken == null) || (props.reducerData.fireBaseToken == 'undefined') ? (
-        <InitalStack.Navigator initialRouteName={SplashScreen}>
+        <InitalStack.Navigator initialRouteName={SplashScreen}  >
           <InitalStack.Screen
             name="SplashScreen"
             component={SplashScreen}
@@ -133,17 +94,18 @@ const App = (props) => {
           />
         </InitalStack.Navigator>
       ) : (
-
           <MainStack.Navigator
             headerMode="screen"
             initialRouteName={HomeScreen}
+            
           >
             <MainStack.Screen
               name="HomeScreen"
               component={HomeScreen}
               options={{
                 headerShown: false,
-              }}
+              }}     
+              initialState={{abc: '2131232132132'}}     
             />
             <MainStack.Screen
               name="ExploreScreen"
@@ -203,7 +165,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
   restoreToken: (fireBaseToken) => dispatch(restoreToken(fireBaseToken))
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 

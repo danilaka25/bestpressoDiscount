@@ -23,7 +23,7 @@ const mapStandardStyle = [
 ];
 
 const { width, height } = Dimensions.get("window");
-const CARD_HEIGHT = 250;
+const CARD_HEIGHT = 210;
 const CARD_WIDTH = width * 0.8;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
@@ -222,14 +222,15 @@ const styles = StyleSheet.create({
   },
   textContent: {
     flex: 1,
-    padding: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10
   },
   cardtitle: {
     fontSize: 16,
     fontWeight: "bold",
   },
   cardDescription: {
-    marginTop: 6,
+    marginTop: 3,
     fontSize: 14,
     color: "#444",
   },

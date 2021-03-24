@@ -1,5 +1,5 @@
 import { StyleSheet, Platform, Dimensions } from "react-native";
-export const CELL_SIZE = 40;
+export const CELL_SIZE = 35;
 export const CELL_BORDER_RADIUS = 8;
 export const DEFAULT_CELL_BG_COLOR = "#ccc";
 export const NOT_EMPTY_CELL_BG_COLOR = "#f6f8fa";
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   footer: {
+    width: '100%',
     height: 300,
     backgroundColor: "#fff",
     borderTopLeftRadius: 30,
@@ -66,22 +67,21 @@ const styles = StyleSheet.create({
 
   codeFieldRoot: {
     height: CELL_SIZE,
-     
-     
     justifyContent: "center",
+    alignItems: 'center'
   },
   cell: {
-    marginHorizontal: 8,
+    marginHorizontal: 4,
     height: CELL_SIZE,
     width: CELL_SIZE,
-    lineHeight: CELL_SIZE - 5,
-    ...Platform.select({ web: { lineHeight: 65 } }),
-    fontSize: 20,
+    lineHeight: CELL_SIZE - 2,
+    ...Platform.select({ web: { lineHeight: 40 } }),
+    fontSize: 18,
     textAlign: "center",
+    alignItems: "center",
     borderRadius: CELL_BORDER_RADIUS,
     color: "#000",
     backgroundColor: "#fff",
-
     // IOS
     shadowColor: "#000",
     shadowOffset: {
@@ -90,14 +90,9 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-
-    // Android
     elevation: 3,
   },
-
   // =======================
-
- 
   title: {
     paddingTop: 0,
     color: "#000",
@@ -121,14 +116,13 @@ const styles = StyleSheet.create({
     color: "#000",
     textAlign: "center",
   },
-
-
   signInRow: {
     display: "flex",
     justifyContent: "center",
     marginTop: 30,
   },
   signIn: {
+    display: 'flex',
     width: 200,
     height: 40,
     justifyContent: "center",
