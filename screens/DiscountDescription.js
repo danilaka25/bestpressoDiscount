@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useContext } from "react";
 import {
   ImageBackground,
   View,
@@ -14,12 +14,24 @@ import STAR from "../assets/svg/star.svg";
 import bgImage from "../assets/pattern2.jpg";
 import Header from "../components/Header";
 
+import { ThemeContext } from './../components/context';
+
+
 const DiscountDescription = ({ navigation }) => {
+
+
+  const smallScreen = useContext(ThemeContext);
+
+  let headerHeigh = 65;
+  if (smallScreen) {
+    headerHeigh = 55
+  }
+
   const scrollY = new Animated.Value(0);
-  const diffClamp = Animated.diffClamp(scrollY, 0, 65);
+  const diffClamp = Animated.diffClamp(scrollY, 0, headerHeigh);
   const translateY = diffClamp.interpolate({
-    inputRange: [0, 65],
-    outputRange: [0, -65],
+    inputRange: [0, headerHeigh],
+    outputRange: [0, -headerHeigh],
   });
 
   return (
@@ -34,6 +46,9 @@ const DiscountDescription = ({ navigation }) => {
           {
             transform: [{ translateY: translateY }],
           },
+          {
+            height: smallScreen ? 55 : 65
+          }
         ]}
       >
         <Header navigation={navigation} showBack={true} showReload={false} bgTransparent={true} />

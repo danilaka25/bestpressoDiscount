@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import LOGO from "../assets/svg/logo.svg";
 import BACK from "../assets/svg/back.svg";
@@ -7,9 +7,13 @@ import INFO from "../assets/svg/info.svg";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchUserData } from './../redux/actions/fetchUserData';
+import { ThemeContext } from './../components/context';
+
 
 const Header = (props, { navigation }) => {
 
+  const smallScreen = useContext(ThemeContext);
+  
   const updateBalance = () => {
     props.fetchUserData()
   };
@@ -44,13 +48,13 @@ const Header = (props, { navigation }) => {
   const displayInfo = () => {
     if (props.showInfo) {
       return (
-        <TouchableOpacity style={styles.info} 
-        onPress={() =>
-          props.navigation.navigate(
-            "DiscountDescription",
-            props.navigation
-          )
-        }
+        <TouchableOpacity style={styles.info}
+          onPress={() =>
+            props.navigation.navigate(
+              "DiscountDescription",
+              props.navigation
+            )
+          }
         >
           <INFO />
         </TouchableOpacity>
@@ -61,9 +65,14 @@ const Header = (props, { navigation }) => {
   };
 
   return (
-    <View style={styles.header}>
+    <View 
+    
+    style={[styles.header, {
+      height: smallScreen ? 55 : 65
+    }]}
+    >
       {displayBack()}
-      <LOGO width="170" height="80" style={styles.logo} />
+      <LOGO width={smallScreen ? '170' : '220'} height="80" style={styles.logo} />
       {displayReload()}
       {displayInfo()}
     </View>
@@ -82,7 +91,7 @@ const styles = StyleSheet.create({
   header: {
     display: "flex",
     width: "100%",
-    height: 65,
+    
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",

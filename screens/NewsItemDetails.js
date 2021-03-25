@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -13,15 +13,25 @@ import {
 import HTMLView from "react-native-htmlview";
 import Header from "../components/Header";
 import bgImage from "../assets/pattern2.jpg";
+import { ThemeContext } from './../components/context';
+
 
 const NewsItemDetails = ({ route, navigation }) => {
+
+  const smallScreen = useContext(ThemeContext);
+
+  let headerHeigh = 65;
+  if (smallScreen) {
+    headerHeigh = 55
+  }
+
   
   const itemData = route.params.itemData;
   const scrollY = new Animated.Value(0);
-  const diffClamp = Animated.diffClamp(scrollY, 0, 65);
+  const diffClamp = Animated.diffClamp(scrollY, 0, headerHeigh);
   const translateY = diffClamp.interpolate({
-    inputRange: [0, 65],
-    outputRange: [0, -65],
+    inputRange: [0, headerHeigh],
+    outputRange: [0, -headerHeigh],
   });
 
   return (
@@ -36,6 +46,9 @@ const NewsItemDetails = ({ route, navigation }) => {
           {
             transform: [{ translateY: translateY }],
           },
+          {
+            height: smallScreen ? 55 : 65
+          }
         ]}
       >
         <Header navigation={navigation} showBack={true} showReload={false} />
@@ -54,7 +67,13 @@ const NewsItemDetails = ({ route, navigation }) => {
               style={styles.newsImage}
               resizeMode="cover"
             />
-            <Text style={styles.title}>{itemData.title}</Text>
+            <Text 
+            
+            style={[styles.title, {
+              fontSize: smallScreen ? 25 : 30
+            }]}
+            
+            >{itemData.title}</Text>
             <HTMLView
               addLineBreaks={false}
               value={itemData.desc}
@@ -93,7 +112,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
     width: "100%",
-    height: 65,
+    //height: 65,
     alignItems: "center",
     justifyContent: "center",
     position: 'absolute'
@@ -132,7 +151,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   title: {
-    fontSize: 30,
+    
     marginTop: 20,
     marginBottom: 15,
     lineHeight: 29,

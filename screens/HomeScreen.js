@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import {
   ScrollView,
   ImageBackground,
@@ -7,7 +7,6 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  Dimensions
 } from "react-native";
 
 import Barcode from "react-native-barcode-builder";
@@ -15,25 +14,22 @@ import Carousel from "react-native-snap-carousel";
 import AsyncStorage from "@react-native-community/async-storage";
 import Header from "../components/Header";
 import database from "@react-native-firebase/database";
-
 import SvgAnimatedLinearGradient from "react-native-svg-animated-linear-gradient";
 import Svg, { Rect } from "react-native-svg";
-
 import bgImage from "../assets/pattern2.jpg";
 import STAR from "../assets/svg/star.svg";
-import INFO from "../assets/svg/info.svg";
-import SETTINGS from "../assets/svg/settings.svg";
+import USER from "../assets/svg/user.svg";
 import MAP from "../assets/svg/map.svg";
 import MENU from "../assets/svg/menu.svg";
 import CUP from "../assets/svg/coffee-cup.svg";
 import NEWS from "../assets/svg/newspaper.svg";
+import INFO from "../assets/svg/info.svg";
 import CUP_Active from "../assets/svg/coffee-cup-active.svg";
 import NEWS_Active from "../assets/svg/newspaper-active.svg";
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchIikoPending, fetchIikoSuccess, fetchIikoError } from './../redux/actions/userDataActions';
 import { fetchUserData } from './../redux/actions/fetchUserData';
+import { ThemeContext } from './../components/context';
 
 import {
   IIKO_LOGIN,
@@ -42,35 +38,17 @@ import {
 } from "react-native-dotenv";
 
 
-const windowHeight = Dimensions.get('window').height;
-let smallScreen = false
-if (windowHeight <= 550) {
-  smallScreen = true
-}
-
 const HomeScreen = (props) => {
 
-
-  console.log("HomeScreen pending" , fetchIikoSuccess())
-
-  //const isFetchingIiko = props.userDataReducer.pending
+  const smallScreen = useContext(ThemeContext);
 
   const productCarousel = useRef();
   const newsCarousel = useRef();
 
-
-
-  console.log("props", props.updateUserData)
-
-  const [firebaseToken, setFirebaseToken] = useState();
-  const [phone, setPhone] = useState(null);
-  const [iikoToken, setIikoToken] = useState(null);
-
-  const [balance, setBalance] = useState(999);
-
   const [activeNewsIndex, setNewsActiveIndex] = useState(0);
   const [activeProductIndex, setActiveProductIndex] = useState(0);
 
+  const [phone, setPhone] = useState(null);
   const [news, setNews] = useState([]);
   const [products, setProducts] = useState([]);
   const [places, setPlaces] = useState([]);
@@ -96,7 +74,7 @@ const HomeScreen = (props) => {
   const _renderNews = ({ item }) => {
     return (
       <TouchableOpacity
-        style={{ marginLeft: 25, marginRight: 25 }}
+        style={{ marginLeft: "5%" }}
         activeOpacity={1}
         itemData={item}
         onPress={() =>
@@ -114,7 +92,7 @@ const HomeScreen = (props) => {
   const _renderProducts = ({ item }) => {
     return (
       <TouchableOpacity
-        style={{ marginLeft: 25 }}
+        style={{ marginLeft: "5%" }}
         activeOpacity={1}
         itemData={item}
         onPress={() =>
@@ -128,7 +106,7 @@ const HomeScreen = (props) => {
         <View style={styles.ProductItemBlock}>
           <View style={{ height: 20 }}></View>
           <View style={styles.ProductItemWrapper}>
-            <Image style={styles.ProductItemImage} source={{ uri: item.img }} />
+            <Image style={smallScreen ? styles.ProductItemImageSmall : styles.ProductItemImage} source={{ uri: item.img }} />
             <View style={styles.ProductItemTitleBlock}><Text style={styles.ProductItemTitle}>{item.title}</Text></View>
             <Text style={styles.ProductItemPrice}>
               {item.variations[0].price} ₴
@@ -169,38 +147,26 @@ const HomeScreen = (props) => {
   };
 
   useEffect(() => {
+
     (async () => {
       await getAllDataFromFirebaseDb();
       await setLoading(false);
     })();
 
     getPhoneAndIikoToken().then((data) => {
-
-
-      //getIikoUserInfoByPhone(data[0], data[1]);
       props.fetchUserData()
-
-
-
-      console.log("userDataReducer((((", props.userDataReducer.iikoUserData.walletBalances[0].balance)
-
-
-      //setBalance(props.userDataReducer.iikoUserData.walletBalances[0].balance)
-      // setTimeout(() => 
-      // getIikoUserInfoByPhone(data[0], data[1])
-
-      // , 6000);
-
     });
 
-    // console.log("userDataReducer", props.userDataReducer);
 
+    console.log(props.userDataReducer.iikoUserData.cards[0].Number)
 
   }, []);
 
   const getPhoneAndIikoToken = async () => {
+
     let phoneNumber;
     let iikoToken;
+
     try {
       phoneNumber = await AsyncStorage.getItem("phoneNumber");
       iikoToken = await getIikoAuthToken();
@@ -211,31 +177,7 @@ const HomeScreen = (props) => {
     return [phoneNumber, iikoToken];
   };
 
-  const addIikoUserByPhone = (phone, token) => {
-    console.log("post user START");
-    fetch(
-      "https://card.iiko.co.uk/api/0/customers/create_or_update?access_token=" +
-      token +
-      "&organization=" +
-      IIKO_ORGANIZATION_ID,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          customer: { phone: phone, magnetCardTrack: generateCardNumber(phone) },
-        }),
-      }
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        console.log("post user", response);
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
-  };
+
 
   const generateCardNumber = (phoneNumber) => {
     let phone = phoneNumber; // 10
@@ -267,73 +209,7 @@ const HomeScreen = (props) => {
       .catch((err) => { });
   };
 
-  const getIikoUserInfoByPhone = (phone, token) => {
-    return fetch(
-      "https://card.iiko.co.uk/api/0/customers/get_customer_by_phone?access_token=" +
-      token +
-      "&organization=" +
-      IIKO_ORGANIZATION_ID +
-      "&phone=" +
-      phone,
-      {
-        method: "GET",
-      }
-    )
-      .then((response) => response.json())
-      .then((userData) => {
-
-
-        console.log("---userData---", userData)
-
-        props.updateUserData(userData)
-
-
-
-        //console.log("getIikoUserInfoByPhone userData", userData);
-        if (userData.httpStatusCode == 400 && userData.code == null) {
-          // create new user
-          console.log("addIikoUserByPhone start");
-
-
-          addIikoUserByPhone(phone, token)
-          //setBalance(0);
-
-        } else {
-          // set balance
-          console.log("set balance");
-          //setBalance(userData.walletBalances[0].balance);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const checkIfIikoTokenIsValid = (iikoToken) => {
-    return fetch(
-      "https://card.iiko.co.uk/api/0/customers/get_customer_by_phone?access_token=" +
-      iikoToken,
-      {
-        method: "GET",
-      }
-    )
-      .then((response) => response.json())
-      .then((responseJson) => {
-        //setIikoResponseCode(responseJson.code)
-        console.log("checkIfIikoTokenIsValid");
-
-        if (responseJson.code == 201) {
-          return false;
-        } else {
-          return true;
-        }
-
-        //return responseJson.code
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+ 
 
   const changeTab = (n) => {
     setActiveTab(n);
@@ -348,7 +224,7 @@ const HomeScreen = (props) => {
               ref={newsCarousel}
               layout={"default"}
               loop={true}
-              enableSnap={true}
+              //enableSnap={true}
               activeSlideAlignment={"start"}
               inactiveSlideScale={1}
               inactiveSlideOpacity={1}
@@ -389,24 +265,31 @@ const HomeScreen = (props) => {
         resizeMode="repeat"
         style={styles.bgImage}
       >
-        <View style={styles.logoContainer}>
+        <View style={
+          { height: smallScreen ? 50 : 70 }
+        }>
           <Header navigation={props.navigation} showBack={false} showReload={true} showInfo={false} />
         </View>
-        <View style={styles.barcodeContainer}>
+
+        <View
+          style={[styles.barcodeContainer, {
+            height: smallScreen ? 160 : 180
+          }]}
+        >
           <View style={styles.barcodeInner}>
             <TouchableOpacity
               onPress={() => props.navigation.navigate("DiscountBigScreen", props.navigation)}
             >
               <View>
-                {phone == null ? (
+
+                {Object.keys(props.userDataReducer.iikoUserData).length == 0 ? (
                   <Text>No bonus</Text>
                 ) : (
                     <Barcode
-                      value={generateCardNumber(phone)}
+                      value={props.userDataReducer.iikoUserData.cards[0].Number}
                       format="CODE128"
                       background="#fff"
                       lineColor="#000"
-                    // width="3"
                     />
                   )}
               </View>
@@ -415,113 +298,122 @@ const HomeScreen = (props) => {
               <Text style={styles.barcodeDesc}>На Вашому рахунку:</Text>
               <View style={styles.barcodePointsContainer}>
                 <STAR width={27} height={27} />
-                {/* {props.userDataReducer.pending ? <Text>Loading</Text> : <Text style={styles.barcodePointsValue}>{props.userDataReducer.iikoUserData.walletBalances[0].balance}</Text>} */}
-                <Text style={styles.barcodePointsText}>Балів</Text>
+
+                {Object.keys(props.userDataReducer.iikoUserData).length == 0 ?
+                  <Text>Loading</Text> :
+                  <Text style={styles.barcodePointsValue}>{props.userDataReducer.iikoUserData.walletBalances[0].balance}</Text>
+                }
+
+                {smallScreen ? <></> : <Text style={styles.barcodePointsText}>Балів</Text>}
               </View>
             </View>
           </View>
         </View>
 
-        <View style={styles.toggleRow}>
-          <TouchableOpacity //style={styles.toggleBtn}
-            activeOpacity={1}
-            style={[
-              styles.toggleBtn,
-              { borderColor: activeTab == 0 ? "#6AAE36" : "transparent" },
-            ]}
-            onPress={() => changeTab(0)}
-          >
-            {activeTab == 1 ? <CUP width="40" height="40" /> : <CUP_Active />}
 
+        <View
+          style={{
+            flex: 370,
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: '#ccc'
+          }}
+        >
 
-
-            {smallScreen ? <></> : <Text
+          <View style={styles.toggleRow}>
+            <TouchableOpacity
+              activeOpacity={1}
               style={[
-                styles.toggleBtnTxt,
-                { color: activeTab == 0 ? "#6AAE36" : "#000" },
+                styles.toggleBtn,
+                { borderColor: activeTab == 0 ? "#6AAE36" : "transparent" },
               ]}
+              onPress={() => changeTab(0)}
             >
-              Меню
+              {activeTab == 1 ? <CUP width="40" height="40" /> : <CUP_Active />}
+
+              {smallScreen ? <></> : <Text
+                style={[
+                  styles.toggleBtnTxt,
+                  { color: activeTab == 0 ? "#6AAE36" : "#000" },
+                ]}
+              >
+                Меню
+            </Text>}
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={1}
+              style={[
+                styles.toggleBtn,
+                { borderColor: activeTab == 1 ? "#6AAE36" : "transparent" },
+              ]}
+              onPress={() => changeTab(1)}
+            >
+              {activeTab == 1 ? <NEWS_Active /> : <NEWS />}
+
+
+              {smallScreen ? <></> : <Text
+                style={[
+                  styles.toggleBtnTxt,
+                  { color: activeTab == 0 ? "#6AAE36" : "#000" },
+                ]}
+              >
+                Новости
             </Text>}
 
-          </TouchableOpacity>
 
-          <TouchableOpacity
-            activeOpacity={1}
-            style={[
-              styles.toggleBtn,
-              { borderColor: activeTab == 1 ? "#6AAE36" : "transparent" },
-            ]}
-            onPress={() => changeTab(1)}
-          >
-            {activeTab == 1 ? <NEWS_Active /> : <NEWS />}
-          
+            </TouchableOpacity>
+          </View>
 
+          {!loading ? (
+            renderSlider(activeTab)
+          ) : (
+              <ScrollView horizontal={true} style={styles.preloadProductsRow}>
+                <SvgAnimatedLinearGradient
+                  width={140}
+                  height={160}
+                  style={styles.preloadProductItem}
+                >
+                  <Rect x="0" y="0" rx="5" ry="30" width="140" height="160" />
+                </SvgAnimatedLinearGradient>
+                <SvgAnimatedLinearGradient
+                  width={140}
+                  height={160}
+                  style={styles.preloadProductItem}
+                >
+                  <Rect x="0" y="0" rx="5" ry="30" width="140" height="160" />
+                </SvgAnimatedLinearGradient>
+                <SvgAnimatedLinearGradient
+                  width={140}
+                  height={160}
+                  style={styles.preloadProductItem}
+                >
+                  <Rect x="0" y="0" rx="5" ry="30" width="140" height="160" />
+                </SvgAnimatedLinearGradient>
+              </ScrollView>
+            )}
 
-            {smallScreen ? <></> : <Text
-              style={[
-                styles.toggleBtnTxt,
-                { color: activeTab == 0 ? "#6AAE36" : "#000" },
-              ]}
-            >
-              Новости
-            </Text>}
-
-
-          </TouchableOpacity>
         </View>
-
-        {!loading ? (
-          renderSlider(activeTab)
-        ) : (
-            <ScrollView horizontal={true} style={styles.preloadProductsRow}>
-              <SvgAnimatedLinearGradient
-                width={140}
-                height={160}
-                style={styles.preloadProductItem}
-              >
-                <Rect x="0" y="0" rx="5" ry="0" width="140" height="160" />
-              </SvgAnimatedLinearGradient>
-              <SvgAnimatedLinearGradient
-                width={140}
-                height={160}
-                style={styles.preloadProductItem}
-              >
-                <Rect x="0" y="0" rx="5" ry="0" width="140" height="160" />
-              </SvgAnimatedLinearGradient>
-              <SvgAnimatedLinearGradient
-                width={140}
-                height={160}
-                style={styles.preloadProductItem}
-              >
-                <Rect x="0" y="0" rx="5" ry="0" width="140" height="160" />
-              </SvgAnimatedLinearGradient>
-            </ScrollView>
-          )}
 
         <View style={styles.categoryContainer}>
           <TouchableOpacity
             style={styles.categoryBtn}
-            onPress={() => props.navigation.navigate("SettingsScreen")}
+            onPress={() => props.navigation.navigate("DiscountDescription")}
           >
             <View style={styles.categoryIcon}>
-              <SETTINGS width={26} height={26} />
+              <INFO width={26} height={26} />
             </View>
-            <Text style={styles.categoryBtnTxt}>Налаштування</Text>
+            {smallScreen ? <></> : <Text style={styles.categoryBtnTxt}>Info</Text>}
           </TouchableOpacity>
-
 
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() => props.navigation.navigate("EditProfileScreen")}
           >
             <View style={styles.categoryIcon}>
-              <SETTINGS width={26} height={26} />
+              <USER width={26} height={26} />
             </View>
-            <Text style={styles.categoryBtnTxt}>Edit</Text>
+            {smallScreen ? <></> : <Text style={styles.categoryBtnTxt}>akk</Text>}
           </TouchableOpacity>
-
-
 
           <TouchableOpacity
             style={styles.categoryBtn}
@@ -530,10 +422,8 @@ const HomeScreen = (props) => {
             <View style={styles.categoryIcon}>
               <MENU width={26} height={26} />
             </View>
-            <Text style={styles.categoryBtnTxt}>Меню</Text>
+            {smallScreen ? <></> : <Text style={styles.categoryBtnTxt}>Меню</Text>}
           </TouchableOpacity>
-
-
 
           <TouchableOpacity
             style={styles.categoryBtn}
@@ -548,7 +438,7 @@ const HomeScreen = (props) => {
             <View style={styles.categoryIcon}>
               <MAP width={26} height={26} />
             </View>
-            <Text style={styles.categoryBtnTxt}>Заклади</Text>
+            {smallScreen ? <></> : <Text style={styles.categoryBtnTxt}>Заклади</Text>}
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -556,17 +446,11 @@ const HomeScreen = (props) => {
   );
 };
 
-
-
-
-//export default HomeScreen;
-
 const mapStateToProps = state => {
   return {
     userDataReducer: state.userDataReducer,
   };
 };
-
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -575,7 +459,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
-
 
 const styles = StyleSheet.create({
   container: {
@@ -595,13 +478,10 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  logoContainer: {
-    height: 70,
-  },
+
   barcodeContainer: {
     marginTop: 0,
     width: "100%",
-    height: 180,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -651,7 +531,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   toggleBtn: {
-    padding: 40,
+    padding: 10,
     borderRadius: 15,
     backgroundColor: "#fff",
     width: "48%",
@@ -664,7 +544,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   toggleBtnTxt: {
-    marginTop: 10,
+    marginTop: 5,
   },
   categoryContainer: {
     position: "absolute",
@@ -773,8 +653,10 @@ const styles = StyleSheet.create({
 
   ProductItemBlock: {
     width: 160,
+    height: 160,
     padding: 5,
     marginRight: 15,
+    backgroundColor: '#999'
   },
   ProductItemWrapper: {
     backgroundColor: "#fff",
@@ -796,9 +678,17 @@ const styles = StyleSheet.create({
     marginTop: -20,
     zIndex: 10,
   },
+  ProductItemImageSmall: {
+    width: 110,
+    height: 100,
+    borderRadius: 15,
+    marginTop: -20,
+    zIndex: 10,
+  },
   ProductItemTitleBlock: {
     width: 118,
-    height: 55,
+    // height: 55,
+    height: 45,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
@@ -808,8 +698,8 @@ const styles = StyleSheet.create({
   },
   ProductItemPrice: {
     position: "absolute",
-    backgroundColor: "#fff",
-    color: "#000",
+    backgroundColor: "#6AAE36",
+    color: "#fff",
     fontSize: 10,
     zIndex: 30,
     right: 30,
@@ -823,9 +713,6 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
   },
   preloadProductItem: {
-    // width: 160,
-    // height: 160,
-    // backgroundColor: '#ccc',
     marginRight: 5,
     borderRadius: 15,
     marginLeft: 0,

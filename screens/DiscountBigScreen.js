@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import {
   ImageBackground,
   View,
@@ -16,25 +16,15 @@ import INFO from "../assets/svg/info.svg";
 
 import { connect } from 'react-redux';
 import { updateUserData } from './../redux/actions/userDataActions';
+import { ThemeContext } from './../components/context';
+
 
 const DiscountBigScreen = (props) => {
 
-  //console.log("DiscountBigScreen", props)
-
-  let phone = props.userDataReducer.iikoUserData.phone
-  let balance = props.userDataReducer.iikoUserData.walletBalances[0].balance
-
-  const generateCardNumber = (phoneNumber) => {
-    let phone = phoneNumber; // 10
-    phone = phone.split('+38').join('');
-    let arr = [];
-    for (let char of phone) {
-      arr.push(char);
-    }
-    let cardNumber = arr[0] + arr[3] + arr[1] + arr[8] + arr[9] + arr[2] + arr[4] + arr[7] + arr[6] + arr[5]
-
-    return cardNumber
-  }
+  const smallScreen = useContext(ThemeContext);
+  const phone = props.userDataReducer.iikoUserData.phone
+  const balance = props.userDataReducer.iikoUserData.walletBalances[0].balance
+  const cardNumber = props.userDataReducer.iikoUserData.cards[0].Number
 
   return (
     <>
@@ -62,7 +52,7 @@ const DiscountBigScreen = (props) => {
               ]}
             >
               <Barcode
-                value={generateCardNumber(phone)}
+                value={cardNumber}
                 format="CODE128"
                 background="#fff"
                 lineColor="#000"
@@ -82,7 +72,10 @@ const DiscountBigScreen = (props) => {
             </View>
           </View>
 
-          <View style={styles.bonusWrapper}>
+          <View style={[styles.bonusWrapper, {
+            bottom: smallScreen ? 0 : 20
+          }]}
+          >
             <TouchableOpacity
               style={styles.bonusWrapperButton}
               onPress={() =>
@@ -125,7 +118,7 @@ const styles = StyleSheet.create({
   bonusWrapper: {
     position: 'absolute',
     width: '100%',
-    bottom: 20,
+
     alignItems: "center",
     justifyContent: 'center',
   },
@@ -173,8 +166,8 @@ const styles = StyleSheet.create({
   barcodeWrapper: {
     alignItems: "center",
     backgroundColor: "#fff",
-    height: 200,
-    paddingHorizontal: 30,
+    //height: 200,
+    //paddingHorizontal: 30,
     justifyContent: "center",
     padding: 20,
     borderRadius: 10,
@@ -183,7 +176,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
-    marginTop: -20
+    //marginTop: -20
   },
   bonusWrapperBonus: {
     marginTop: 10,

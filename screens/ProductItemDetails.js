@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   View,
   Text,
@@ -14,17 +14,26 @@ import {
 import HTMLView from "react-native-htmlview";
 import Header from "../components/Header";
 import bgImage from "../assets/pattern2.jpg";
+import { ThemeContext } from './../components/context';
+
 
 const ProductItemDetails = ({ route, navigation }) => {
 
+  const smallScreen = useContext(ThemeContext);
+
+  const headerHeigh = 65;
+  if (smallScreen) {
+    headerHeigh = 55
+  }
+
   const itemData = route.params.itemData;
-  let countItems = itemData.variations.length;
+  const countItems = itemData.variations.length;
 
   const scrollY = new Animated.Value(0);
-  const diffClamp = Animated.diffClamp(scrollY, 0, 65);
+  const diffClamp = Animated.diffClamp(scrollY, 0, headerHeigh);
   const translateY = diffClamp.interpolate({
-    inputRange: [0, 65],
-    outputRange: [0, -65],
+    inputRange: [0, headerHeigh],
+    outputRange: [0, -headerHeigh],
   });
 
   const renderPrices = () => {
@@ -88,6 +97,9 @@ const ProductItemDetails = ({ route, navigation }) => {
           {
             transform: [{ translateY: translateY }],
           },
+          {
+            height: smallScreen ? 55 : 65
+          }
         ]}
       >
         <Header navigation={navigation} showBack={true} showReload={false} />
@@ -103,7 +115,11 @@ const ProductItemDetails = ({ route, navigation }) => {
           <View style={styles.section}>
             <Image source={{ uri: itemData.img }} style={styles.productImage} resizeMode="cover" />
             <View style={styles.sectionContent}>
-              <Text style={styles.title}>{itemData.title}</Text>
+              <Text 
+               style={[styles.title, {
+                fontSize: smallScreen ? 25 : 30
+              }]}
+              >{itemData.title}</Text>
               {renderPrices()}
               <HTMLView
                 addLineBreaks={false}
@@ -138,7 +154,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
     width: "100%",
-    height: 65,
+     
     alignItems: "center",
     justifyContent: "center",
     position: 'absolute'
@@ -253,7 +269,6 @@ const styles = StyleSheet.create({
   },
   title: {
     display: 'flex',
-    fontSize: 40,
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',

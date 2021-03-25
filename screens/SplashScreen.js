@@ -11,16 +11,10 @@ import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useTheme } from '@react-navigation/native';
-
 import LOGO from '../assets/svg/logo.svg';
 import bgImage from "../assets/pattern2.jpg";
 
-import AsyncStorage from "@react-native-community/async-storage";
-
-
 const SplashScreen = ({ navigation }) => {
-
-    const { colors } = useTheme();
 
     return (
         <ImageBackground source={bgImage} resizeMode='repeat' style={styles.bgImage}>
@@ -32,14 +26,11 @@ const SplashScreen = ({ navigation }) => {
                 <LOGO width="280" height="100" />
             </Animatable.View>
             <Animatable.View
-                style={[styles.footer, {
-                    backgroundColor: colors.background
-                }]}
+                style={styles.footer
+                }
                 animation="fadeInUpBig"
             >
-                <Text style={[styles.title, {
-                    color: colors.text
-                }]}>Накоплюй бали, отримуй знижки!</Text>
+                <Text style={styles.title}>Накоплюй бали, отримуй знижки!</Text>
                 <View style={styles.button}>
                     <TouchableOpacity onPress={() => navigation.navigate('SignInScreen')}>
                         <LinearGradient

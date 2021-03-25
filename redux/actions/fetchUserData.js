@@ -17,9 +17,7 @@ const generateCardNumber = (phoneNumber) => {
     for (let char of phone) {
         arr.push(char);
     }
-    let cardNumber = arr[0] + arr[3] + arr[1] + arr[8] + arr[9] + arr[2] + arr[4] + arr[7] + arr[6] + arr[5]
-
-    //console.log("arr", cardNumber)
+    let cardNumber = "0000" + arr[0] + arr[3] + arr[1] + arr[8] + arr[9] + arr[2] + arr[4] + arr[7] + arr[6] + arr[5]
     return cardNumber
 }
 
@@ -78,8 +76,8 @@ export const fetchUserData = () => {
       dispatch(fetchIikoPending());
 
       getIikoAuthToken().then(() => {
-          //console.log("iikoToken 9090", data)
-          return fetch(
+
+        return fetch(
               "https://card.iiko.co.uk/api/0/customers/get_customer_by_phone?access_token=" +
               iikoToken+
               "&organization=" +
@@ -93,7 +91,7 @@ export const fetchUserData = () => {
           .then((response) => response.json())
           .then((userData) => {
   
-              console.log("dispatch END", userData)
+              //console.log("dispatch END", userData)
 
 
               if (userData.httpStatusCode == 400 && userData.code == null) {
@@ -122,10 +120,9 @@ export const fetchUserData = () => {
               }
 
               return dispatch(fetchIikoSuccess(userData));
-  
+
           })
           .catch((error) => {
-            console.log("ERROR in fetchUserData", error)
             return dispatch(fetchIikoError(error));
           });
 
