@@ -90,8 +90,7 @@ export default connect(null, mapDispatchToProps)(Header);
 const styles = StyleSheet.create({
   header: {
     display: "flex",
-    width: "100%",
-    
+    width: "100%", 
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",

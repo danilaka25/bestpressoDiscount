@@ -49,7 +49,7 @@ const SignInScreen = ({ navigation }) => {
           setDisableBtn(true);
         }
       } else {
-        Alert.alert("please enter numbers only");
+        Alert.alert("Вводити лише цифри");
       }
     }
     setPhoneNumber(validPhone);
@@ -71,12 +71,22 @@ const SignInScreen = ({ navigation }) => {
   async function signInWithPhoneNumber(phoneNumber) {
     let prefix = "+38";
     if (phoneNumber.length == 10) {
-      const confirmation = await auth().signInWithPhoneNumber(
-        prefix + phoneNumber
-      );
+      let confirmation;
+       try {
+         confirmation = await auth().signInWithPhoneNumber(
+          prefix + phoneNumber
+        )
+       } catch(err) {
+         console.log("Err or", err)
+        Alert.alert(err.toString());
+       }
+
+
+      
+      //Alert.alert(confirmation);
       navigation.navigate("ConfirmScreen", { confirm: confirmation, phoneNumber: phoneNumber }, navigation);
     } else {
-      Alert.alert("not correct number");
+      Alert.alert("Неправильний номер телефону");
     }
   }
 

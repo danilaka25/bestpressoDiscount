@@ -21,7 +21,7 @@ const ProductItemDetails = ({ route, navigation }) => {
 
   const smallScreen = useContext(ThemeContext);
 
-  const headerHeigh = 65;
+  let headerHeigh = 65;
   if (smallScreen) {
     headerHeigh = 55
   }

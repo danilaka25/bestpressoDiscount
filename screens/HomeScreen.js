@@ -118,7 +118,7 @@ const HomeScreen = (props) => {
   };
 
   const getAllDataFromFirebaseDb = async () => {
-    console.log("isLoading");
+    //.log("isLoading");
     let tempNews = [];
     let tempProducts = [];
     let tempPlaces = [];
@@ -158,7 +158,6 @@ const HomeScreen = (props) => {
     });
 
 
-    console.log(props.userDataReducer.iikoUserData.cards[0].Number)
 
   }, []);
 
@@ -179,18 +178,7 @@ const HomeScreen = (props) => {
 
 
 
-  const generateCardNumber = (phoneNumber) => {
-    let phone = phoneNumber; // 10
-    phone = phone.split('+38').join('');
-    let arr = [];
-    for (let char of phone) {
-      arr.push(char);
-    }
-    let cardNumber = "0000" + arr[0] + arr[3] + arr[1] + arr[8] + arr[9] + arr[2] + arr[4] + arr[7] + arr[6] + arr[5]
 
-    //console.log("arr", cardNumber)
-    return cardNumber
-  }
 
   const getIikoAuthToken = () => {
     return fetch(
@@ -295,7 +283,7 @@ const HomeScreen = (props) => {
               </View>
             </TouchableOpacity>
             <View style={styles.barcodeDescRow}>
-              <Text style={styles.barcodeDesc}>На Вашому рахунку:</Text>
+              <Text style={styles.barcodeDesc}>{smallScreen}На Вашому рахунку:</Text>
               <View style={styles.barcodePointsContainer}>
                 <STAR width={27} height={27} />
 
@@ -313,19 +301,31 @@ const HomeScreen = (props) => {
 
         <View
           style={{
-            flex: 370,
+            flex: 1,
+            //height: 390,
             display: 'flex',
+            //flex: 1,
             flexDirection: 'column',
-            backgroundColor: '#ccc'
+            //backgroundColor: '#ccc',
+            //justifyContent: 'space-around',
+            justifyContent: 'center'
           }}
         >
 
-          <View style={styles.toggleRow}>
+          <View 
+           style={[
+            styles.toggleRow,
+            { paddingBottom: smallScreen ? 10 : 20 },
+            { paddingTop: smallScreen ? 10 : 20 },
+
+          ]}
+          >
             <TouchableOpacity
               activeOpacity={1}
               style={[
                 styles.toggleBtn,
                 { borderColor: activeTab == 0 ? "#6AAE36" : "transparent" },
+                { padding: smallScreen ? 20 : 40 }
               ]}
               onPress={() => changeTab(0)}
             >
@@ -335,6 +335,7 @@ const HomeScreen = (props) => {
                 style={[
                   styles.toggleBtnTxt,
                   { color: activeTab == 0 ? "#6AAE36" : "#000" },
+                  
                 ]}
               >
                 Меню
@@ -345,6 +346,7 @@ const HomeScreen = (props) => {
               style={[
                 styles.toggleBtn,
                 { borderColor: activeTab == 1 ? "#6AAE36" : "transparent" },
+                { padding: smallScreen ? 20 : 40 }
               ]}
               onPress={() => changeTab(1)}
             >
@@ -357,7 +359,7 @@ const HomeScreen = (props) => {
                   { color: activeTab == 0 ? "#6AAE36" : "#000" },
                 ]}
               >
-                Новости
+                Новини
             </Text>}
 
 
@@ -395,6 +397,17 @@ const HomeScreen = (props) => {
         </View>
 
         <View style={styles.categoryContainer}>
+
+        <TouchableOpacity
+            style={styles.categoryBtn}
+            onPress={() => props.navigation.navigate("EditProfileScreen")}
+          >
+            <View style={styles.categoryIcon}>
+              <USER width={26} height={26} />
+            </View>
+            {smallScreen ? <></> : <Text style={styles.categoryBtnTxt}>Мій аккаунт</Text>}
+          </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() => props.navigation.navigate("DiscountDescription")}
@@ -402,20 +415,12 @@ const HomeScreen = (props) => {
             <View style={styles.categoryIcon}>
               <INFO width={26} height={26} />
             </View>
-            {smallScreen ? <></> : <Text style={styles.categoryBtnTxt}>Info</Text>}
+            {smallScreen ? <></> : <Text style={styles.categoryBtnTxt}>Як працює</Text>}
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.categoryBtn}
-            onPress={() => props.navigation.navigate("EditProfileScreen")}
-          >
-            <View style={styles.categoryIcon}>
-              <USER width={26} height={26} />
-            </View>
-            {smallScreen ? <></> : <Text style={styles.categoryBtnTxt}>akk</Text>}
-          </TouchableOpacity>
 
-          <TouchableOpacity
+
+          {/* <TouchableOpacity
             style={styles.categoryBtn}
             onPress={() => props.navigation.navigate("DiscountDescription")}
           >
@@ -423,7 +428,7 @@ const HomeScreen = (props) => {
               <MENU width={26} height={26} />
             </View>
             {smallScreen ? <></> : <Text style={styles.categoryBtnTxt}>Меню</Text>}
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity
             style={styles.categoryBtn}
@@ -526,12 +531,10 @@ const styles = StyleSheet.create({
     width: "90%",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 20,
-    paddingBottom: 20,
     alignSelf: "center",
   },
   toggleBtn: {
-    padding: 10,
+    
     borderRadius: 15,
     backgroundColor: "#fff",
     width: "48%",
@@ -591,11 +594,12 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   SliderWrapper: {
-    flex: 2,
+    //flex: 2,
     flexDirection: "row",
-    justifyContent: "center",
+    height: 210,
+    //justifyContent: "center",
     //width: "95%",
-    alignSelf: "flex-end",
+    //alignSelf: "flex-end",
   },
   NewsItemBlock: {
     flexDirection: 'row',
@@ -656,7 +660,7 @@ const styles = StyleSheet.create({
     height: 160,
     padding: 5,
     marginRight: 15,
-    backgroundColor: '#999'
+    //backgroundColor: '#999'
   },
   ProductItemWrapper: {
     backgroundColor: "#fff",

@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-36:12
-INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-36:12
-INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-36:12
-INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-36:12
+ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-38:12
+INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-38:12
+INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-38:12
+INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-38:12
 MERGED from [:react-native-firebase_auth] /Users/user/Desktop/FoodPelican/node_modules/@react-native-firebase/auth/android/build/intermediates/library_manifest/release/AndroidManifest.xml:2:1-15:12
 MERGED from [:react-native-firebase_database] /Users/user/Desktop/FoodPelican/node_modules/@react-native-firebase/database/android/build/intermediates/library_manifest/release/AndroidManifest.xml:2:1-15:12
 MERGED from [:react-native-firebase_app] /Users/user/Desktop/FoodPelican/node_modules/@react-native-firebase/app/android/build/intermediates/library_manifest/release/AndroidManifest.xml:2:1-11:12
@@ -19,6 +19,7 @@ MERGED from [:react-native-screens] /Users/user/Desktop/FoodPelican/node_modules
 MERGED from [:react-native-svg] /Users/user/Desktop/FoodPelican/node_modules/react-native-svg/android/build/intermediates/library_manifest/release/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-vector-icons] /Users/user/Desktop/FoodPelican/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/release/AndroidManifest.xml:2:1-11:12
 MERGED from [com.facebook.react:react-native:0.62.2] /Users/user/.gradle/caches/transforms-2/files-2.1/ef474ea8ad52aeaf6702db94ca6001da/jetified-react-native-0.62.2/AndroidManifest.xml:2:1-13:12
+MERGED from [androidx.browser:browser:1.2.0] /Users/user/.gradle/caches/transforms-2/files-2.1/dd16f1c7037c60871d05e7a5399e8efe/browser-1.2.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/dd017c82fa8bef5ec7529fded07d70ee/swiperefreshlayout-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [org.webkit:android-jsc:r245459] /Users/user/.gradle/caches/transforms-2/files-2.1/4c254ae2cefa924bc5b63961dfd1f2b3/jetified-android-jsc-r245459/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-linear-gradient] /Users/user/Desktop/FoodPelican/node_modules/react-native-linear-gradient/android/build/intermediates/library_manifest/release/AndroidManifest.xml:2:1-11:12
@@ -46,25 +47,25 @@ MERGED from [com.facebook.fresco:imagepipeline:2.0.0] /Users/user/.gradle/caches
 MERGED from [com.facebook.fresco:nativeimagetranscoder:2.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/8a42b9f1864b3ce74da0d2a348fe0b96/jetified-nativeimagetranscoder-2.0.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.facebook.fresco:imagepipeline-base:2.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/6ae9d3c67fe7f95cb166b0bba65eb696/jetified-imagepipeline-base-2.0.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.facebook.soloader:soloader:0.8.0] /Users/user/.gradle/caches/transforms-2/files-2.1/dc341b792075d1ad62a65d6651b53221/jetified-soloader-0.8.0/AndroidManifest.xml:2:1-13:12
-MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/f6b26a06d2859f32a33dabf92c4ce938/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/fe95cd4d61bbe28233f1ba669243f5ec/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/fb3b1a3514d4c889e1218531d6ebadbd/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/878f230ead6282e44354b42562efff70/jetified-viewpager2-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.fragment:fragment:1.2.1] /Users/user/.gradle/caches/transforms-2/files-2.1/fc17449cf217207bf3a8da488e307f28/fragment-1.2.1/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/ead880f6210e4761be4d48d168039f92/coordinatorlayout-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/af23e5143a1702e2ea713f33111a8bbd/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.loader:loader:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/9643b69b62f50ffdc660898f594c3065/loader-1.0.0/AndroidManifest.xml:17:1-22:12
-MERGED from [com.google.firebase:firebase-components:16.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/604dc40102371292004f993027c45ba2/jetified-firebase-components-16.1.0/AndroidManifest.xml:15:1-23:12
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/f6b26a06d2859f32a33dabf92c4ce938/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/94d90c2534690d8e539892be89eb9091/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/a7120251eab5ac8c9a4cf237db7e77bc/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.activity:activity:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/74ed7495f42843506d9f50cb3e8f164e/jetified-activity-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.recyclerview:recyclerview:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/8a598aa3f65b2f3984a95531d2da8cba/recyclerview-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.customview:customview:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/518f8869f8f762b5aab151962d7ca5d1/customview-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.transition:transition:1.2.0] /Users/user/.gradle/caches/transforms-2/files-2.1/84f9e59be40fff541c20b2fe50bcb68e/transition-1.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/fe95cd4d61bbe28233f1ba669243f5ec/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/1bd2e02a825cd2be16f921b09d827191/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.core:core:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/8c847f7e8b67603e179b4ed08fb4ceb0/core-1.1.0/AndroidManifest.xml:17:1-26:12
-MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/89bee306a4eca65df9255b35db571bb7/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/664d4781bf91698ba2f272c7291e56fd/versionedparcelable-1.1.0/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/fb3b1a3514d4c889e1218531d6ebadbd/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/af23e5143a1702e2ea713f33111a8bbd/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.firebase:firebase-components:16.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/604dc40102371292004f993027c45ba2/jetified-firebase-components-16.1.0/AndroidManifest.xml:15:1-23:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/89bee306a4eca65df9255b35db571bb7/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0] /Users/user/.gradle/caches/transforms-2/files-2.1/07a061bb711283d7b12645a12b36498a/jetified-lifecycle-viewmodel-savedstate-2.2.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.2.0] /Users/user/.gradle/caches/transforms-2/files-2.1/a0931df7355e8f906fa254de65b96b81/lifecycle-viewmodel-2.2.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.cardview:cardview:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/0063e1202479a18776b6d60d9de51c6a/cardview-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -76,25 +77,25 @@ MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/user/.gradle/caches/t
 MERGED from [com.facebook.fresco:fbcore:2.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/8150a6794c6e5d5bb3af27003384b6ec/jetified-fbcore-2.0.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.facebook.soloader:annotation:0.8.0] /Users/user/.gradle/caches/transforms-2/files-2.1/2475010ca6f0647c061a5d3f3cb7a8f6/jetified-annotation-0.8.2/AndroidManifest.xml:2:1-13:12
 MERGED from [com.google.maps.android:android-maps-utils:0.5] /Users/user/.gradle/caches/transforms-2/files-2.1/4e0992e02b0bae85d914a0b693e40fe8/jetified-android-maps-utils-0.5/AndroidManifest.xml:2:1-13:12
-INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-36:12
-INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-36:12
-INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-36:12
+INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-38:12
+INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-38:12
+INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-38:12
 	package
 		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:2:3-32
 		INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml
 	android:versionName
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:4:3-31
 		INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-36:12
-		INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml
-	android:versionCode
-		INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:1-36:12
 		INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:1:11-69
+	android:versionCode
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:3:3-26
+		INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml
 uses-permission#android.permission.INTERNET
-ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:4:5-67
+ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:7:5-67
 MERGED from [:react-native-firebase_auth] /Users/user/Desktop/FoodPelican/node_modules/@react-native-firebase/auth/android/build/intermediates/library_manifest/release/AndroidManifest.xml:11:5-67
 MERGED from [:react-native-firebase_auth] /Users/user/Desktop/FoodPelican/node_modules/@react-native-firebase/auth/android/build/intermediates/library_manifest/release/AndroidManifest.xml:11:5-67
 MERGED from [:react-native-firebase_database] /Users/user/Desktop/FoodPelican/node_modules/@react-native-firebase/database/android/build/intermediates/library_manifest/release/AndroidManifest.xml:11:5-67
@@ -108,25 +109,9 @@ MERGED from [com.google.firebase:firebase-database:19.6.0] /Users/user/.gradle/c
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/8491e26325ee271584cf86c4bb76013d/jetified-play-services-maps-17.0.0/AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/8491e26325ee271584cf86c4bb76013d/jetified-play-services-maps-17.0.0/AndroidManifest.xml:24:5-67
 	android:name
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:4:22-64
-uses-permission#android.permission.CAMERA
-ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:5:5-64
-	android:name
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:5:22-62
-uses-feature#android.hardware.camera
-ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:6:5-85
-	android:required
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:6:58-82
-	android:name
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:6:19-57
-uses-feature#android.hardware.camera.front
-ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:7:5-91
-	android:required
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:7:64-88
-	android:name
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:7:19-63
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:7:22-64
 application
-ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:9:5-34:19
+ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:11:5-36:19
 MERGED from [com.google.firebase:firebase-auth:20.0.2] /Users/user/.gradle/caches/transforms-2/files-2.1/da24243f494ea5385d82b14649215d69/jetified-firebase-auth-20.0.2/AndroidManifest.xml:26:5-81:19
 MERGED from [com.google.firebase:firebase-auth:20.0.2] /Users/user/.gradle/caches/transforms-2/files-2.1/da24243f494ea5385d82b14649215d69/jetified-firebase-auth-20.0.2/AndroidManifest.xml:26:5-81:19
 MERGED from [com.google.android.gms:play-services-safetynet:17.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/cf264438c6cc1090fae1cbb3936e352f/jetified-play-services-safetynet-17.0.0/AndroidManifest.xml:22:5-20
@@ -168,49 +153,49 @@ MERGED from [com.google.maps.android:android-maps-utils:0.5] /Users/user/.gradle
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/8c847f7e8b67603e179b4ed08fb4ceb0/core-1.1.0/AndroidManifest.xml:24:18-86
 	android:label
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:11:7-39
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:13:7-39
 	android:roundIcon
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:13:7-52
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:15:7-52
 	android:icon
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:12:7-41
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:14:7-41
 	android:allowBackup
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:14:7-34
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:16:7-34
 	android:theme
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:15:7-38
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:17:7-38
 	android:name
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:10:7-38
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:12:7-38
 meta-data#com.google.android.geo.API_KEY
-ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:17:5-19:64
+ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:19:5-21:64
 	android:value
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:19:7-62
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:21:7-62
 	android:name
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:18:7-52
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:20:7-52
 activity#com.pelicandiscount.MainActivity
-ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:21:7-32:18
+ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:23:7-34:18
 	android:screenOrientation
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:27:9-45
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:29:9-45
 	android:label
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:23:9-41
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:25:9-41
 	android:launchMode
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:25:9-40
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:27:9-40
 	android:configChanges
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:24:9-86
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:26:9-86
 	android:name
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:22:9-37
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:24:9-37
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:28:9-31:25
+ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:30:9-33:25
 action#android.intent.action.MAIN
-ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:29:13-65
+ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:31:13-65
 	android:name
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:29:21-62
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:31:21-62
 category#android.intent.category.LAUNCHER
-ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:30:13-73
+ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:32:13-73
 	android:name
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:30:23-70
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:32:23-70
 activity#com.facebook.react.devsupport.DevSettingsActivity
-ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:33:7-84
+ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:35:7-84
 	android:name
-		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:33:17-81
+		ADDED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml:35:17-81
 uses-sdk
 INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/user/Desktop/FoodPelican/android/app/src/main/AndroidManifest.xml
@@ -245,6 +230,8 @@ MERGED from [:react-native-vector-icons] /Users/user/Desktop/FoodPelican/node_mo
 MERGED from [:react-native-vector-icons] /Users/user/Desktop/FoodPelican/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/release/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.react:react-native:0.62.2] /Users/user/.gradle/caches/transforms-2/files-2.1/ef474ea8ad52aeaf6702db94ca6001da/jetified-react-native-0.62.2/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.react:react-native:0.62.2] /Users/user/.gradle/caches/transforms-2/files-2.1/ef474ea8ad52aeaf6702db94ca6001da/jetified-react-native-0.62.2/AndroidManifest.xml:7:5-9:41
+MERGED from [androidx.browser:browser:1.2.0] /Users/user/.gradle/caches/transforms-2/files-2.1/dd16f1c7037c60871d05e7a5399e8efe/browser-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.browser:browser:1.2.0] /Users/user/.gradle/caches/transforms-2/files-2.1/dd16f1c7037c60871d05e7a5399e8efe/browser-1.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/dd017c82fa8bef5ec7529fded07d70ee/swiperefreshlayout-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/dd017c82fa8bef5ec7529fded07d70ee/swiperefreshlayout-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [org.webkit:android-jsc:r245459] /Users/user/.gradle/caches/transforms-2/files-2.1/4c254ae2cefa924bc5b63961dfd1f2b3/jetified-android-jsc-r245459/AndroidManifest.xml:7:5-9:41
@@ -299,24 +286,16 @@ MERGED from [com.facebook.fresco:imagepipeline-base:2.0.0] /Users/user/.gradle/c
 MERGED from [com.facebook.fresco:imagepipeline-base:2.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/6ae9d3c67fe7f95cb166b0bba65eb696/jetified-imagepipeline-base-2.0.0/AndroidManifest.xml:5:5-7:41
 MERGED from [com.facebook.soloader:soloader:0.8.0] /Users/user/.gradle/caches/transforms-2/files-2.1/dc341b792075d1ad62a65d6651b53221/jetified-soloader-0.8.0/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.soloader:soloader:0.8.0] /Users/user/.gradle/caches/transforms-2/files-2.1/dc341b792075d1ad62a65d6651b53221/jetified-soloader-0.8.0/AndroidManifest.xml:7:5-9:41
-MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/f6b26a06d2859f32a33dabf92c4ce938/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/f6b26a06d2859f32a33dabf92c4ce938/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/fe95cd4d61bbe28233f1ba669243f5ec/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/fe95cd4d61bbe28233f1ba669243f5ec/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/fb3b1a3514d4c889e1218531d6ebadbd/interpolator-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/fb3b1a3514d4c889e1218531d6ebadbd/interpolator-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/878f230ead6282e44354b42562efff70/jetified-viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.viewpager2:viewpager2:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/878f230ead6282e44354b42562efff70/jetified-viewpager2-1.0.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.fragment:fragment:1.2.1] /Users/user/.gradle/caches/transforms-2/files-2.1/fc17449cf217207bf3a8da488e307f28/fragment-1.2.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.fragment:fragment:1.2.1] /Users/user/.gradle/caches/transforms-2/files-2.1/fc17449cf217207bf3a8da488e307f28/fragment-1.2.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/ead880f6210e4761be4d48d168039f92/coordinatorlayout-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/ead880f6210e4761be4d48d168039f92/coordinatorlayout-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/af23e5143a1702e2ea713f33111a8bbd/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/af23e5143a1702e2ea713f33111a8bbd/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/9643b69b62f50ffdc660898f594c3065/loader-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/9643b69b62f50ffdc660898f594c3065/loader-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [com.google.firebase:firebase-components:16.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/604dc40102371292004f993027c45ba2/jetified-firebase-components-16.1.0/AndroidManifest.xml:19:5-21:41
-MERGED from [com.google.firebase:firebase-components:16.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/604dc40102371292004f993027c45ba2/jetified-firebase-components-16.1.0/AndroidManifest.xml:19:5-21:41
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/f6b26a06d2859f32a33dabf92c4ce938/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat-resources:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/f6b26a06d2859f32a33dabf92c4ce938/jetified-appcompat-resources-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/94d90c2534690d8e539892be89eb9091/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/94d90c2534690d8e539892be89eb9091/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/a7120251eab5ac8c9a4cf237db7e77bc/viewpager-1.0.0/AndroidManifest.xml:20:5-44
@@ -329,14 +308,22 @@ MERGED from [androidx.customview:customview:1.0.0] /Users/user/.gradle/caches/tr
 MERGED from [androidx.customview:customview:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/518f8869f8f762b5aab151962d7ca5d1/customview-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.transition:transition:1.2.0] /Users/user/.gradle/caches/transforms-2/files-2.1/84f9e59be40fff541c20b2fe50bcb68e/transition-1.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.transition:transition:1.2.0] /Users/user/.gradle/caches/transforms-2/files-2.1/84f9e59be40fff541c20b2fe50bcb68e/transition-1.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/fe95cd4d61bbe28233f1ba669243f5ec/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/fe95cd4d61bbe28233f1ba669243f5ec/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/1bd2e02a825cd2be16f921b09d827191/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/1bd2e02a825cd2be16f921b09d827191/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.core:core:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/8c847f7e8b67603e179b4ed08fb4ceb0/core-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.core:core:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/8c847f7e8b67603e179b4ed08fb4ceb0/core-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/89bee306a4eca65df9255b35db571bb7/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/89bee306a4eca65df9255b35db571bb7/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/664d4781bf91698ba2f272c7291e56fd/versionedparcelable-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/664d4781bf91698ba2f272c7291e56fd/versionedparcelable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/fb3b1a3514d4c889e1218531d6ebadbd/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/fb3b1a3514d4c889e1218531d6ebadbd/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/af23e5143a1702e2ea713f33111a8bbd/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/af23e5143a1702e2ea713f33111a8bbd/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-components:16.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/604dc40102371292004f993027c45ba2/jetified-firebase-components-16.1.0/AndroidManifest.xml:19:5-21:41
+MERGED from [com.google.firebase:firebase-components:16.1.0] /Users/user/.gradle/caches/transforms-2/files-2.1/604dc40102371292004f993027c45ba2/jetified-firebase-components-16.1.0/AndroidManifest.xml:19:5-21:41
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/89bee306a4eca65df9255b35db571bb7/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/user/.gradle/caches/transforms-2/files-2.1/89bee306a4eca65df9255b35db571bb7/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0] /Users/user/.gradle/caches/transforms-2/files-2.1/07a061bb711283d7b12645a12b36498a/jetified-lifecycle-viewmodel-savedstate-2.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0] /Users/user/.gradle/caches/transforms-2/files-2.1/07a061bb711283d7b12645a12b36498a/jetified-lifecycle-viewmodel-savedstate-2.2.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.2.0] /Users/user/.gradle/caches/transforms-2/files-2.1/a0931df7355e8f906fa254de65b96b81/lifecycle-viewmodel-2.2.0/AndroidManifest.xml:20:5-22:41

@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:880075929258:android:14912a8d72e39635b242d3",
+        "mobilesdk_app_id": "1:880075929258:android:133cfb4d7883bf35b242d3",
         "android_client_info": {
           "package_name": "com.pelicandiscount"
         }
       },
       "oauth_client": [
         {
-          "client_id": "880075929258-129tu81h6i1r43vhblrb6d79q1l78isk.apps.googleusercontent.com",
+          "client_id": "880075929258-nsopca83e88q1di23jkt07in56v80vf4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.pelicandiscount",
-            "certificate_hash": "7c71d9ccc0294b87b3c29b020634ab3f181110ec"
+            "certificate_hash": "0f210f70a2eeeee7c4edb92e287d31b0051338eb"
           }
         },
         {
@@ -38,6 +38,13 @@
             {
               "client_id": "880075929258-j6dj6mseuvt2hle92i4lphhmo7nbhbp9.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "880075929258-nu3r4hvh4q3k8ee21j7qdvftv0n66t3v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pelicandiscount"
+              }
             }
           ]
         }

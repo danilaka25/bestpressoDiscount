@@ -5,10 +5,7 @@ import {
     IIKO_PASS,
     IIKO_ORGANIZATION_ID,
   } from "react-native-dotenv";
-
-  import AsyncStorage from "@react-native-community/async-storage";
-
-
+import AsyncStorage from "@react-native-community/async-storage";
 
 const generateCardNumber = (phoneNumber) => {
     let phone = phoneNumber; // 10
@@ -23,7 +20,6 @@ const generateCardNumber = (phoneNumber) => {
 
 var phoneNumber;
 var iikoToken;
-
 
 const getIikoAuthToken = async () => {
     phoneNumber = await AsyncStorage.getItem("phoneNumber");
@@ -44,7 +40,7 @@ const getIikoAuthToken = async () => {
 }
 
 const addIikoUserByPhone = (phone, token) => {
-  console.log("post user START");
+  //console.log("post user START");
   fetch(
     "https://card.iiko.co.uk/api/0/customers/create_or_update?access_token=" +
     token +
@@ -61,18 +57,18 @@ const addIikoUserByPhone = (phone, token) => {
     }
   )
     .then((response) => response.json())
-    .then((response) => {
-      console.log("post user", response);
-    })
+    // .then((response) => {
+    //   console.log("post user", response);
+    // })
     .catch((err) => {
-      console.log("error", err);
+      //console.log("error", err);
     });
 };
 
 export const fetchUserData = () => {
     return dispatch => {
         
-      console.log("dispatch START")  
+      //console.log("dispatch START")  
       dispatch(fetchIikoPending());
 
       getIikoAuthToken().then(() => {
@@ -91,12 +87,9 @@ export const fetchUserData = () => {
           .then((response) => response.json())
           .then((userData) => {
   
-              //console.log("dispatch END", userData)
-
-
               if (userData.httpStatusCode == 400 && userData.code == null) {
 
-                  console.log("no user")
+                  // no user
                   addIikoUserByPhone(phoneNumber, iikoToken).then(()=> {
 
                     return fetch(

@@ -36,7 +36,7 @@ const App = (props) => {
 
   const windowHeight = Dimensions.get('window').height;
   let smallScreen = false
-  if (windowHeight <= 550) {
+  if (windowHeight <= 810) {
     smallScreen = true
   }
 

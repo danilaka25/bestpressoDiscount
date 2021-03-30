@@ -3,3 +3,5 @@ android/.gradle
 android/*.hprof
 .env*.local
 .env
+android/app/mykeystore.keystore2
+android/app/google-services.json

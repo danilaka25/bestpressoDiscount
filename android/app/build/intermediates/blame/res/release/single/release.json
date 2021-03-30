@@ -104,6 +104,10 @@
         "source": "/Users/user/Desktop/FoodPelican/android/app/build/generated/res/react/release/raw/node_modules_reactnativevectoricons_glyphmaps_materialcommunityicons.json"
     },
     {
+        "merged": "/Users/user/Desktop/FoodPelican/android/app/build/intermediates/res/merged/release/drawable-xhdpi_node_modules_reactnativecheckbox_img_ic_check_box_outline_blank.png.flat",
+        "source": "/Users/user/Desktop/FoodPelican/android/app/build/generated/res/react/release/drawable-xhdpi/node_modules_reactnativecheckbox_img_ic_check_box_outline_blank.png"
+    },
+    {
         "merged": "/Users/user/Desktop/FoodPelican/android/app/build/intermediates/res/merged/release/raw_node_modules_entities_maps_xml.json.flat",
         "source": "/Users/user/Desktop/FoodPelican/android/app/build/generated/res/react/release/raw/node_modules_entities_maps_xml.json"
     },
@@ -114,10 +118,6 @@
     {
         "merged": "/Users/user/Desktop/FoodPelican/android/app/build/intermediates/res/merged/release/mipmap-xxhdpi_ic_launcher.png.flat",
         "source": "/Users/user/Desktop/FoodPelican/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
-    },
-    {
-        "merged": "/Users/user/Desktop/FoodPelican/android/app/build/intermediates/res/merged/release/drawable-xhdpi_node_modules_reactnativecheckbox_img_ic_check_box_outline_blank.png.flat",
-        "source": "/Users/user/Desktop/FoodPelican/android/app/build/generated/res/react/release/drawable-xhdpi/node_modules_reactnativecheckbox_img_ic_check_box_outline_blank.png"
     },
     {
         "merged": "/Users/user/Desktop/FoodPelican/android/app/build/intermediates/res/merged/release/mipmap-xxxhdpi_ic_launcher.png.flat",

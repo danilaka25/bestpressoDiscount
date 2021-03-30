@@ -125,10 +125,10 @@ const ConfirmScreen = (props) => {
         await AsyncStorage.setItem("phoneNumber", prefix + phoneNumber);
         props.signIn(confirm._verificationId)// dispatch
       } catch (e) {
-        //console.log(e);
+        console.log(e);
       }
     } catch (error) {
-      Alert.alert("false code");
+      Alert.alert("Помилковий код");
     }
   }
 
